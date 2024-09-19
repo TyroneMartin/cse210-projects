@@ -12,9 +12,6 @@ class Program
         // D >= 60
         // F < 60
 
-        string plus = "+";
-        string minus = "-";
-
         Console.WriteLine("This program will convert your grade percentage into a letter grade.");
         Console.WriteLine("Enter the number of your grade percentage only, ig. 100 or 90.");
         Console.WriteLine("--------------------------");
@@ -27,38 +24,55 @@ class Program
         // Or I can use it in one line
         // int grade = int.Parse(Console.ReadLine());
 
-        // convert grade    
-        if (grade >= 90) 
+        string letter = "";
+        string letterSign = "";
+
+        if (grade >= 70)
         {
-            Console.WriteLine("Your grade is an A");
-        }
-        else if (grade >= 80)
-        {
-            Console.WriteLine("Your grade is a B");
-        }
-        else if (grade >= 70)
-        {
-            Console.WriteLine("Your grade is a C");
-        }
-        else if (grade >= 60)
-        {
-            Console.WriteLine("Your grade is a D");
+            letterSign = "+";
         }
         else
         {
-            Console.WriteLine("Your grade is a F");
+            letterSign = "-";
         }
 
-            if (grade >= 70)
-            {
-                Console.WriteLine("Congratulations, you passed!");
-            }
-            else
-            {
-                Console.WriteLine("Better luck next time.");
-            }
+        // convert grade    
+        if (grade >= 90) 
+        {
+            // Console.WriteLine("Your grade is an A");
+            letter = "A";
+        }
+        else if (grade >= 80)
+        {
+            letter = "B";
+        }
+        else if (grade >= 70)
+        {
+            letter = "C";
+        }
+        else if (grade >= 60)
+        {
+            letter = "D";
+        }
+        else
+        {
+            letter = "F";
+        }
 
-        // end program
-        Console.WriteLine("Goodbye!");
+        // print letter grade output
+
+        Console.WriteLine($"Your grade is an {letter}{letterSign}");
+
+    
+      // grade pass/fail message output
+        if (grade >= 70)
+        {
+            Console.WriteLine("Congratulations, you passed!");
+        }
+        else
+        {
+            Console.WriteLine("Better luck next time.");
+        }
+
     }
 }
