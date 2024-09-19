@@ -27,7 +27,14 @@ class Program
         string letter = "";
         string letterSign = "";
 
-        if (grade >= 70)
+        // if (grade >= 70)
+        // exceptional cases for not assigning a letter sign to A+, F+, or F-.
+        if (grade >= 90 || grade <= 69)
+        {
+            letterSign = "";
+        }
+        else if (grade >= 70)
+       
         {
             letterSign = "+";
         }
