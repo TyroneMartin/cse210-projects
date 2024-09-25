@@ -20,7 +20,7 @@ class Program
 
         // Get random number from 1-100
         Random randomGenerator = new Random();
-        int randomNumber = randomGenerator.Next(1, 2);
+        int randomNumber = randomGenerator.Next(1, 100);
 
        do 
        {
