@@ -1,0 +1,25 @@
+using System;
+
+class Program
+
+{
+    static void Main(string[] args)
+    {
+        // Console.WriteLine("Hello Prep4 World!");
+        // using System.Collections.Generic;
+
+
+        List<string> names = new List<string>();
+        names.Add("Adam");
+        names.Add("Eve");
+        names.Add("Eve");
+        names.Add("Adam");
+
+        names.Sort();
+        Console.WriteLine(names.Count);
+        Console.WriteLine(names[2]);
+        Console.WriteLine(names.Capacity);
+
+
+    }
+}
