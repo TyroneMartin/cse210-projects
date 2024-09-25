@@ -5,8 +5,8 @@ class Program
 {
     static void Main(string[] args)
     {
-
         
+
         // Intro to user
         Console.WriteLine("Guess a random number from 1-100");
         Console.WriteLine("");
