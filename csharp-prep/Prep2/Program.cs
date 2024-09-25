@@ -43,7 +43,7 @@ class Program
             letterSign = "-";
         }
 
-        // convert grade    
+        // convert grade to letter   
         if (grade >= 90) 
         {
             // Console.WriteLine("Your grade is an A");
