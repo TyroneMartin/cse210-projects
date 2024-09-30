@@ -22,6 +22,13 @@ class Program
         job2._startYear = 2022;
         job2._endYear = 2023;
 
+        Job job3 = new Job();
+
+        job3._company = "Google";
+        job3._jobTitle = "Software Engineer";
+        job3._startYear = 2023;
+        job3._endYear = 2024;
+
 
         Resume myResume = new Resume();
 
@@ -29,6 +36,7 @@ class Program
 
         myResume._jobs.Add(job1);
         myResume._jobs.Add(job2);
+        myResume._jobs.Add(job3);
 
         myResume.DisplayResume();
 
