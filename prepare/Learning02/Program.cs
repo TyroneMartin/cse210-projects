@@ -6,7 +6,8 @@ class Program
     {
 
 // Activity Instructions
-// Practice the principle of abstraction by creating classes to represent a resume or an job history for a person like you might see on LinkedIn.
+// Practice the principle of abstraction by creating classes to represent a resume or an job history 
+// for a person like you might see on LinkedIn.
 
         Job job1 = new Job();
 
