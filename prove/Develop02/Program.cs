@@ -11,21 +11,29 @@ class Program
 
         // Class: journal
         // Attributes/ Fields:  
-        // *_journalEntryQuestionGenerator : string (at least 5 questions)
-        // (*_timeDate : DateTime) 
-        // *_fileNamePrompt : string
-        // (*_getFileName : string)
         // *_menuOption : string  (1-5 options)
+        // *_journalEntryQuestionGenerator : string (at least 5 questions)
+        // *_timeDate : DateTime
+        // *_fileNamePrompt : string
+        // *_loadFileName : string (load/get file name from memory)
 
         // Behaviors/Methods:
-        // * DisplayFileName() : void
         // * DisplayMenu() : void
-        // * AddEntry() : void
-        // * DisplayJournalEntries() : void
+        // * AddEntry() : void  (add to list of entries save timestamp)
+        // * loadFileName() : void (load from file)
+        // * DisplayEntries() : void (display user name and list of entries and timestamp)
+        // * SaveEntries() : void (save to file)
 
+
+        // Responsibilities:
+        // Keeps track of the person's name and a list of their journal entries.
+
+
+
+// Program Draft 
 
 // Welcome to the Journal Program!
-// Please write your name. (Optional)
+// Please write your name. 
 
 // Please select one of the following options:
 // menuOptions = new List<string>() {"1. Write", "2. Display", "3. Load", "4. Save  .csv", "5. Quit"};
