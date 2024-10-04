@@ -452,3 +452,9 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+##
+
+.ppv
+.vpp.lck
+.Journal UML Program Design.vpp.lck

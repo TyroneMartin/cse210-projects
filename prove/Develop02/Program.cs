@@ -8,6 +8,9 @@ class Program
         // Journal Program
         // questions for user and record responses in journal with date and time
 
+        // Understanding ULM Class Design 
+        // https://www.youtube.com/watch?v=6XrL5jXmTwM
+
 
         // Class: journal
         // Attributes/ Fields:  
@@ -61,12 +64,33 @@ class Program
 
 
 
+// https://video.byui.edu/media/t/1_vmeovorz
 
 
+// Starting the Code from a Class Diagram
 
+// four  types of classes
+// * class: Journal
+//  _entries : List<string>
+// attributes:
+// DisplayMenu() : void
+// SaveEntries() : void
+// loadFileName() : void
 
+// * class: PromptGenerator
+//  _promptList : List<string>
+// attributes:
+// GetRandomPrompt() : string
 
+// * class: Person (optional)
+//  _name : string
 
+// * class: Entry
+// attributes:
+//  _date : DateTime/string
+//  _prompt : string
+//  _promptText : string
+// DisplayEntry() : void
 
 
     }
