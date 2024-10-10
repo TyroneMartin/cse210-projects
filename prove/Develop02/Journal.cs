@@ -127,13 +127,17 @@ public class Journal
                 Console.WriteLine("############################################################# ");
                 Console.WriteLine("Invalid choice. Please try again. \"Yes\" or \"No\" to confirm.");
                 Console.WriteLine("############################################################# ");
-                DisplayMenu();
+                
+                // fix this logic
+                // read line, if yes --  allow user to retype file name. 
+                // if no -- return to main menu.
+                // DisplayMenu();
             }
             DisplayMenu();
         }
         else if (userChoice == "6")
         {
-            return;
+            return;  // Exit the program
         }
         else
         {
@@ -146,8 +150,7 @@ public class Journal
     
     }
     
-    
-    
+
     public void DisplayEntries()
     {
         foreach (Entry entry in _entries)

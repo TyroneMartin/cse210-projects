@@ -11,7 +11,7 @@
 //  Allows the user to enter their name.
 
 
-class User
+public class User
 {
     private string _userName;
 
