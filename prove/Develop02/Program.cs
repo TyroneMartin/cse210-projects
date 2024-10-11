@@ -5,27 +5,14 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Get the user's name name and welcome them to the e-journal.
-        User user = new User();  
-        user.DisplayUserName();  // maybe write a if statement to check if user exists
+        // Create an instance of the User
+        User user = new User();
+        user.DisplayUserName();  // Display the user's name
 
-        // add menu options here, ie AddEntry, LoadFromFile, SaveToFile, DeleteFile
+        // Create an instance of the Journal
         Journal journal = new Journal();
+
+        // Display the journal menu
         journal.DisplayMenu();
-
-       
-
-
-
-
-        // journal.DisplayEntries();
-
-
-
-
-
-  
-
-
     }
 }

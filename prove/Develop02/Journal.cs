@@ -31,17 +31,16 @@ public class Journal
         Console.WriteLine(" 4. Save entries to a file");
         Console.WriteLine(" 5. Delete a file");
         Console.WriteLine(" 6. Quit");
+        Console.WriteLine(" ");
         Console.Write("Select a choice from the menu: ");
         string userChoice = Console.ReadLine();
 
          if (userChoice == "1")
         {
-            Entry entry = new Entry("questionPrompt", "journal entry"); // Create a new entry object
-            entry.GetDate();
-            entry.GetQuestionPrompt();
-            entry.GetJournalEntry();
-            AddEntry(entry);
+     
+     /// Add entry
             DisplayMenu();
+        
         }
         else if (userChoice == "2")
         {
@@ -90,49 +89,12 @@ public class Journal
         }
         else if (userChoice == "4")
         {
-            Console.Write("Enter the name of the file to save: ");
-            string fileName = Console.ReadLine();
-            Console.WriteLine(" ");
-            SaveToFile(fileName);
+            SaveToFile("filename");  // Save entries to "filename");
             DisplayMenu();
         }
         else if (userChoice == "5")
         {
-            Console.WriteLine("Enter the name of the file to delete: ");
-            string fileName = Console.ReadLine();
-            Console.WriteLine("############################################################# ");
-            Console.WriteLine($"Are you sure you want to delete this {fileName} file? (y/n)");
-            string confirm = Console.ReadLine();
-            Console.WriteLine("############################################################# ");
-
-            if (fileName.Length > 0 && confirm.ToLower() == "yes" || confirm.ToLower() == "y") // check if file exists
-            {
-                Console.WriteLine($"File {fileName} deleted.");
-                DeleteFile(fileName);
-                Console.WriteLine(" ");
-                DisplayMenu();
-
-            }
-
-            else if (confirm.ToLower() == "no" || confirm.ToLower() == "n")
-            {
-                Console.WriteLine(" ");
-                Console.WriteLine($"File {fileName} not deleted.");
-                DisplayMenu();
-
-            }
-
-            else
-            {
-                Console.WriteLine("############################################################# ");
-                Console.WriteLine("Invalid choice. Please try again. \"Yes\" or \"No\" to confirm.");
-                Console.WriteLine("############################################################# ");
-                
-                // fix this logic
-                // read line, if yes --  allow user to retype file name. 
-                // if no -- return to main menu.
-                // DisplayMenu();
-            }
+            DeleteFile();
             DisplayMenu();
         }
         else if (userChoice == "6")
@@ -149,13 +111,23 @@ public class Journal
         }
     
     }
-    
+
 
     public void DisplayEntries()
     {
-        foreach (Entry entry in _entries)
+
+        if (_entries.Count == 0)
         {
-            entry.DisplayEntry();
+            Console.WriteLine("No entries found, please add an entry first :)");
+            return;
+        }
+        else
+        {
+            Console.WriteLine("Entries:");
+            foreach (Entry entry in _entries)
+            {
+                entry.DisplayEntry();
+            }
         }
     }
 
@@ -166,26 +138,68 @@ public class Journal
 
 
     public void LoadFromFile(string filename)
-    {
-        // Load entries from the specified file
+ {
+        if (File.Exists(filename))
+        {
+            string[] lines = File.ReadAllLines(filename);
+            // _entries.Clear(); 
 
-        return;
+            foreach (var line in lines)
+            {
+                string[] parts = line.Split('|'); 
+                if (parts.Length == 2)
+                {
+                    Entry entry = new Entry(parts[0], parts[1]);
+                    _entries.Add(entry);
+                }
+            }
 
+            Console.WriteLine($"Loaded {_entries.Count} entries from {filename}.");
+        }
+        else
+        {
+            Console.WriteLine($"File {filename} does not exist.");
+        }
     }
 
     public void SaveToFile(string filename)
     {
-        // Save entries to the specified file
+        using (StreamWriter writer = new StreamWriter(filename))
+        {
+            foreach (Entry entry in _entries)
+            {
+                writer.WriteLine($"{entry.GetQuestionPrompt()}|{entry.GetJournalEntry()}");
+            }
+        }
 
-       return;
+        Console.WriteLine($"Journal saved to {filename}.");
     }
 
-    public void DeleteFile(string filename)
+    private void DeleteFile()
     {
-        // Delete the specified file
-
-        return;
-
+        Console.Write("Enter the name of the file to delete: ");
+        string fileName = Console.ReadLine();
+        Console.WriteLine("######################################################### ");
+        Console.Write($"Are you sure you want to delete {fileName}? (y/n): ");
+        string deleteConfirm = Console.ReadLine();
+        Console.WriteLine("######################################################### ");
+        
+        if (deleteConfirm.ToLower() == "y" || deleteConfirm.ToLower() == "yes")
+        {
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+                Console.WriteLine($"File {fileName} deleted.");
+            }
+            else
+            {
+                Console.WriteLine($"File {fileName} not found.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("File deletion canceled.");
+        }
     }
 
 }
