@@ -1,5 +1,7 @@
 using System;
 
+
+
 public class Entry
 {
     private DateTime _date;
@@ -17,7 +19,7 @@ public class Entry
     public void DisplayEntry()
     {
         Console.WriteLine("Prompt: " + _questionPrompt);
-        Console.WriteLine($"Date: {_date.ToShortDateString()}");
+        Console.WriteLine($"Date: {_date.ToShortDateString()} {_date.Hour}:{_date.Minute}");
         Console.WriteLine("Entry: " + _journalEntry);
         Console.WriteLine();
     }

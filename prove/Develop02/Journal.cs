@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.IO;
+
 // Class: 
-// Attributes:  
+// Attributes: Journal
 // * _entries : List<Entry>
 
 // * Behaviors/Methods:
@@ -20,7 +21,6 @@ public class Journal
 {
     private List<Entry> _entries = new List<Entry>();
 
-    
     public void DisplayMenu()
     {
         Console.WriteLine(" ");
@@ -35,12 +35,10 @@ public class Journal
         Console.Write("Select a choice from the menu: ");
         string userChoice = Console.ReadLine();
 
-         if (userChoice == "1")
+        if (userChoice == "1")
         {
-     
-     /// Add entry
+            AddNewEntry();
             DisplayMenu();
-        
         }
         else if (userChoice == "2")
         {
@@ -49,77 +47,58 @@ public class Journal
         }
         else if (userChoice == "3")
         {
-        
-        Console.WriteLine("Enter the name of the file to load: ");
-        string fileName = Console.ReadLine();
-
-        if (fileName.Length > 0 && fileName.ToLower() != "quit")
-        {
-            // Need to complete LoadFromFile() 
-            Console.WriteLine($"Loading your journal entries from {fileName}."); 
-            LoadFromFile(fileName);  // check if file name is valid
-        }
-        else if (fileName.ToLower() == "quit")
-        {
-            return;  // Exit the function if the user types "quit"
-        }
-        else
-        {
-            Console.WriteLine("############################################################# ");
-            Console.WriteLine("Invalid file name. Please try again. Or type 'quit' to exit.");
-            fileName = Console.ReadLine(); 
-            Console.WriteLine("############################################################# ");
-            if (fileName.ToLower() == "quit")
-            {
-                return;  // Exit function if user types "quit"
-            }
-            else
-            {
-                Console.WriteLine("############################################################# ");
-                Console.WriteLine($"Loading your journal entries from {fileName}.");
-                LoadFromFile(fileName);
-                Console.WriteLine("############################################################# ");
-
-            }
-        }
-
-        DisplayMenu();  // Show the menu once file is loaded or if the user quits program
-
-
+            Console.Write("Enter the name of the file to load: ");
+            string fileName = Console.ReadLine();
+            LoadFromFile(fileName);
+            DisplayMenu();
         }
         else if (userChoice == "4")
         {
-            SaveToFile("filename");  // Save entries to "filename");
+            Console.Write("Enter the name of the file to save: ");
+            string fileName = Console.ReadLine();
+            SaveToFile(fileName);
             DisplayMenu();
         }
         else if (userChoice == "5")
         {
-            DeleteFile();
+            DeleteFile(); 
             DisplayMenu();
         }
         else if (userChoice == "6")
         {
-            return;  // Exit the program
+            Console.WriteLine("Exiting the program. Goodbye!");
+            return;
         }
         else
         {
             Console.WriteLine("######################################################### ");
             Console.WriteLine("Invalid choice selection from the menu options [1-6].");
             Console.WriteLine("######################################################### ");
-
             DisplayMenu();
         }
-    
     }
 
+    // Method to add a new journal entry
+    private void AddNewEntry()
+    {
+        PromptGenerator promptGenerator = new PromptGenerator();
+        string questionPrompt = promptGenerator.RandomQuestion();
+
+        Console.WriteLine("Journal Prompt: " + questionPrompt);
+        Console.Write("Your response: ");
+        string journalEntry = Console.ReadLine();
+
+        Entry newEntry = new Entry(questionPrompt, journalEntry);
+        AddEntry(newEntry);
+
+        Console.WriteLine("Journal entry saved.");
+    }
 
     public void DisplayEntries()
     {
-
         if (_entries.Count == 0)
         {
             Console.WriteLine("No entries found, please add an entry first :)");
-            return;
         }
         else
         {
@@ -132,21 +111,19 @@ public class Journal
     }
 
     public void AddEntry(Entry entry)
-        {
-            _entries.Add(entry);
-        }
-
+    {
+        _entries.Add(entry);
+    }
 
     public void LoadFromFile(string filename)
- {
+    {
         if (File.Exists(filename))
         {
             string[] lines = File.ReadAllLines(filename);
-            // _entries.Clear(); 
-
+            // _entries.Clear();  // Clear current entries
             foreach (var line in lines)
             {
-                string[] parts = line.Split('|'); 
+                string[] parts = line.Split('|');
                 if (parts.Length == 2)
                 {
                     Entry entry = new Entry(parts[0], parts[1]);
@@ -155,6 +132,7 @@ public class Journal
             }
 
             Console.WriteLine($"Loaded {_entries.Count} entries from {filename}.");
+            DisplayEntries();
         }
         else
         {
@@ -179,11 +157,10 @@ public class Journal
     {
         Console.Write("Enter the name of the file to delete: ");
         string fileName = Console.ReadLine();
-        Console.WriteLine("######################################################### ");
         Console.Write($"Are you sure you want to delete {fileName}? (y/n): ");
         string deleteConfirm = Console.ReadLine();
         Console.WriteLine("######################################################### ");
-        
+
         if (deleteConfirm.ToLower() == "y" || deleteConfirm.ToLower() == "yes")
         {
             if (File.Exists(fileName))
@@ -201,5 +178,4 @@ public class Journal
             Console.WriteLine("File deletion canceled.");
         }
     }
-
 }
