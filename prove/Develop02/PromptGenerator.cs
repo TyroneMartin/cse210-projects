@@ -29,9 +29,9 @@ public class PromptGenerator
 
     };
     public string RandomQuestion()
-    {   
+    {
         Random random = new Random();
         int randomIndex = random.Next(0, _questionPrompt.Count);
         return _questionPrompt[randomIndex];
     }
-} 
+}
