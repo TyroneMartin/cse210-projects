@@ -79,7 +79,7 @@ public class Journal
     }
 
     // Method to add a new journal entry
-    private void AddNewEntry()
+    public void AddNewEntry()
     {
         PromptGenerator promptGenerator = new PromptGenerator();
         string questionPrompt = promptGenerator.RandomQuestion();
@@ -153,7 +153,7 @@ public class Journal
         Console.WriteLine($"Journal saved to {filename}.");
     }
 
-    private void DeleteFile()
+    public void DeleteFile()
     {
         Console.Write("Enter the name of the file to delete: ");
         string fileName = Console.ReadLine();
