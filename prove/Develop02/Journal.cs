@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 // Class: 
@@ -98,9 +99,23 @@ public class Journal
         Entry newEntry = new Entry(questionPrompt, journalEntry);
         AddEntry(newEntry);
 
-        Console.WriteLine("######################################################### ");
-        Console.WriteLine("--Journal entry saved.");
-        Console.WriteLine("######################################################### ");
+        // Console.WriteLine("######################################################### ");
+        // Console.WriteLine("--Journal entry saved, remember to save it to a file.");
+        // Console.WriteLine("######################################################### ");
+
+        if (_entries.Count == 1)
+        {
+            Console.WriteLine("################################################################## ");
+            Console.WriteLine("--Journal entry saved, remember to save your entry to a file.");
+            Console.WriteLine("################################################################## ");
+        }
+
+        else
+        {
+            Console.WriteLine("################################################################### ");
+            Console.WriteLine("--Journal entry saved, remember to save your entries to a file.");
+            Console.WriteLine("################################################################### ");
+        }
 
     }
 
@@ -135,19 +150,19 @@ public class Journal
 
             while (userChoice != "y" && userChoice != "yes" && userChoice != "n" && userChoice != "no")
             {
-                Console.Write("Invalid choice, please enter (y/n). ");
+                Console.WriteLine("");
+                Console.Write("> Invalid choice, please enter (Yes or No) to add another entry: ");
                 userChoice = Console.ReadLine()?.ToLower();
             }
 
             if (userChoice == "y" || userChoice == "yes")
             {
                 AddNewEntry(); // Adds a new entry if yes
+                DisplayMenu(); // Break out of loop if no (shortcut)
             }
             else if (userChoice == "n" || userChoice == "no")
             {
-                // Console.WriteLine("#########################################################");
-                // Console.WriteLine("--Journal entry saved.");
-                // Console.WriteLine("#########################################################");
+
                 break; // Exits the loop if no
             }
 
