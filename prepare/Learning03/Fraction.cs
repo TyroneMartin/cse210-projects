@@ -1,25 +1,6 @@
 using System;
 
-// UML diagram
-// Class: Fraction
-// Attributes:
-// * _numerator : int     // top
-// * _denominator : int  // bottom
-
-// Behaviors/Methods:
-// * Fraction() : void
-// * Fraction(wholeNumber : int) : void
-// * Fraction(numerator : int, denominator : int) : void
-
-// * GetNumerator() : int
-// * GetDenominator() : int
-// * SetNumerator(numerator : int) : void
-// * SetDenominator(denominator : int) : void
-
-// * GetFractionString() : string
-// * GetDecimalValue() : double
-
-class Fraction 
+public class Fraction 
 {
     private int _numerator;
     private int _denominator;
@@ -28,7 +9,7 @@ class Fraction
 
     public Fraction()
     {
-        _numerator = 1/1;
+        _numerator = 1/1;  // default to  1
         _denominator = 1/1;
     }
 
@@ -80,3 +61,22 @@ class Fraction
 
 }
 
+
+// UML diagram
+// Class: Fraction
+// Attributes:
+// * _numerator : int     // top
+// * _denominator : int  // bottom
+
+// Behaviors/Methods:
+// * Fraction() : void
+// * Fraction(wholeNumber : int) : void
+// * Fraction(numerator : int, denominator : int) : void
+
+// * GetNumerator() : int
+// * GetDenominator() : int
+// * SetNumerator(numerator : int) : void
+// * SetDenominator(denominator : int) : void
+
+// * GetFractionString() : string
+// * GetDecimalValue() : double
