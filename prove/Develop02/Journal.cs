@@ -20,7 +20,9 @@ using System.IO;
 
 public class Journal
 {
+    private User _user;
     private List<Entry> _entries = new List<Entry>();
+
 
     public void DisplayMenu()
     {
@@ -56,7 +58,7 @@ public class Journal
         else if (userChoice == "4" && _entries.Count > 0)
         {
             Console.Write("Enter the name of the file to save: ");
-            string fileName = Console.ReadLine(); 
+            string fileName = Console.ReadLine();
             SaveToFile(fileName);
             DisplayMenu();
         }
@@ -89,14 +91,29 @@ public class Journal
     // Method to add a new journal entry
     public void AddNewEntry()
     {
-        PromptGenerator promptGenerator = new PromptGenerator();
-        string questionPrompt = promptGenerator.RandomQuestion();
+        // PromptGenerator promptGenerator = new PromptGenerator();
+        // string questionPrompt = promptGenerator.RandomQuestion();
+        //  Entry._user 
+        //  Entry._date = DateTime.Now; 
+        // Console.WriteLine("Journal Prompt: " + questionPrompt);
+        // Console.Write("Your response: ");
+        // string journalEntry = Console.ReadLine();
 
+        // Entry newEntry = new Entry( _user, questionPrompt, journalEntry);
+        // AddEntry(newEntry);
+
+
+
+        PromptGenerator promptGenerator = new PromptGenerator();
+        string questionPrompt = promptGenerator.RandomQuestion(); // Get a random question prompt
+        User user = _user;
+        DateTime date = DateTime.Now;
         Console.WriteLine("Journal Prompt: " + questionPrompt);
         Console.Write("Your response: ");
         string journalEntry = Console.ReadLine();
 
-        Entry newEntry = new Entry(questionPrompt, journalEntry);
+        // Create a new Entry object with the User, question prompt, journal entry, and date
+        Entry newEntry = new Entry(user, date, questionPrompt, journalEntry);
         AddEntry(newEntry);
 
         // Console.WriteLine("######################################################### ");
@@ -175,13 +192,20 @@ public class Journal
         if (File.Exists(filename))
         {
             string[] lines = File.ReadAllLines(filename);
-            // _entries.Clear();  // Clear current entries
             foreach (var line in lines)
             {
-                string[] parts = line.Split('|');
-                if (parts.Length == 2)
+                string[] parts = line.Split("|", StringSplitOptions.TrimEntries);
+                if (parts.Length == 4)
                 {
-                    Entry entry = new Entry(parts[0], parts[1]);
+                    // Create a new User instance with the username from file
+                    User user = new User();
+                    user.SetUserName(parts[0]); // Make sure you have this method in your User class
+
+                    DateTime date = DateTime.Parse(parts[1]);
+                    string questionPrompt = parts[2];
+                    string journalEntry = parts[3];
+
+                    Entry entry = new Entry(user, date, questionPrompt, journalEntry);
                     _entries.Add(entry);
                 }
             }
@@ -198,21 +222,21 @@ public class Journal
             Console.WriteLine($"-- File {filename} does not exist.");
         }
     }
-
     public void SaveToFile(string filename)
     {
         using (StreamWriter writer = new StreamWriter(filename))
         {
             foreach (Entry entry in _entries)
             {
-                writer.WriteLine($"{entry.GetQuestionPrompt()}| {entry.GetDate()} | {entry.GetJournalEntry()}");
+                writer.WriteLine($"{_user.GetUserName()} |{entry.GetDate()}|{entry.GetQuestionPrompt()}|{entry.GetJournalEntry()}");
             }
         }
         Console.WriteLine("######################################################### ");
         Console.WriteLine($"Journal saved to {filename}.");
         Console.WriteLine("######################################################### ");
-
     }
+
+
 
     public void DeleteFile()
     {

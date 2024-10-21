@@ -11,8 +11,11 @@ class Program
 
         // Create an instance of the Journal
         Journal journal = new Journal();
+        // journal._user = user;
 
         // Display the journal menu
         journal.DisplayMenu();
+   
+
     }
 }
