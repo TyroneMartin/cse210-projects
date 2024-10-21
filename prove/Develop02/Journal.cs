@@ -56,7 +56,7 @@ public class Journal
         else if (userChoice == "4" && _entries.Count > 0)
         {
             Console.Write("Enter the name of the file to save: ");
-            string fileName = Console.ReadLine();
+            string fileName = Console.ReadLine(); 
             SaveToFile(fileName);
             DisplayMenu();
         }
@@ -186,7 +186,11 @@ public class Journal
                 }
             }
 
-            Console.WriteLine($"Loaded {_entries.Count} entries from {filename}.");
+            Console.WriteLine("");
+            Console.WriteLine("######################################################### ");
+            Console.WriteLine($" Loaded {_entries.Count} entries from {filename}.");
+            Console.WriteLine("######################################################### ");
+
             DisplayEntries();
         }
         else
@@ -201,7 +205,7 @@ public class Journal
         {
             foreach (Entry entry in _entries)
             {
-                writer.WriteLine($"{entry.GetQuestionPrompt()}|{entry.GetJournalEntry()}");
+                writer.WriteLine($"{entry.GetQuestionPrompt()}| {entry.GetDate()} | {entry.GetJournalEntry()}");
             }
         }
         Console.WriteLine("######################################################### ");
