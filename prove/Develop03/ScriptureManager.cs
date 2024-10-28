@@ -1,18 +1,18 @@
 // class: ScriptureManager
 // Attributes: 
-// *_Book : String
-// *_Chapter : Int
-// *_Verse : Int
-// *_Category : String
+// * _Book : string
+// * _Chapter : int
+// * _Verse : int
+// * _Category : string
+// * _Text : string
 
 // * Behaviors/Methods:
-// * AddBook() 
-// * AddChapter()
-// * AddVerse()
-// * AddCategory()
-// * GetScripture() : string
+// * ScriptureManager(string book, int chapter, int verse, string category, string text)
+// * GetReference() : string
 // * GetCategory() : string
-// * Scripture(Book: String, Chapter: Int, Verse : Int, Category: String) : void
+// * GetText() : string
+// * ToString() : string
+
 
 public class ScriptureManager
 {

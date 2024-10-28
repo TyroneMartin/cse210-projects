@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 // class: Scripture
 // Attributes: 
-// * _DefaultScripture : string
-// * _ScriptureList : List<string>
+// * _ScriptureAdded : list
+// * _scriptureManager
 
 // * Behaviors/Methods:
 // * +OptionMenu() 
@@ -13,26 +13,30 @@ using System.Collections.Generic;
 // * GetRandomScripture() : scripture
 // * ReferenceId() : string
 
-
 public class Scripture
 {
     private List<Scripture> _ScriptureAdded;
-    private ScriptureManager _scriptureManager;
-    private string _DefaultScriptureVerse;
+    private ScriptureManager _scriptureManager;  // default scripture added stored in object
 
     public Scripture()
     {
         _ScriptureAdded = new List<Scripture>();
         _scriptureManager = new ScriptureManager("John", 3, 16, "Gospel", 
             "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.");
-        AddDefaultScripture();
+        InitializeDefaultScripture();
     }
 
-    private void AddDefaultScripture()
+    //  for adding new scriptures to the list
+    public Scripture(ScriptureManager scriptureManager)
     {
-        Scripture defaultScripture = new Scripture();
-        defaultScripture._scriptureManager = _scriptureManager;
-        _ScriptureAdded.Add(defaultScripture);
+        _ScriptureAdded = new List<Scripture>();
+        _scriptureManager = scriptureManager;
+    }
+
+    private void InitializeDefaultScripture()
+    {
+        // Instead for creating a new Scripture
+        _ScriptureAdded.Add(this);
     }
 
     public void OptionMenu()
@@ -43,6 +47,8 @@ public class Scripture
         Console.WriteLine("2. Add Scripture");
         Console.WriteLine("3. Practice Memorization");
         Console.WriteLine("4. Exit");
+        // Console.WriteLine("5. Remove Scripture");
+        // Console.WriteLine("6. View Random Scripture");
     }
 
     public void AddEntry(Scripture scripture)

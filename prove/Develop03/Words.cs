@@ -1,11 +1,16 @@
 // class: Words
 // Attributes: 
-// *_HideWord : string
-// *_ShowWord : string
+// *_Words : list
+// *_IsHidden : list
+// *_Random : random
+// *_RemainingWords : int
 
 // * Behaviors/Methods:
-// * HideWord()
-// * ShowWord() 
+// * HideRandomWord() : bool
+// * GetDisplayText() 
+// * IsCompleted() : bool
+// * CheckWord(string : guess, out string : hint) : bool
+
 
 public class Words
 {

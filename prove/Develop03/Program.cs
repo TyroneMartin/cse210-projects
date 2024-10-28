@@ -3,160 +3,159 @@ using System.Collections.Generic;
 
 class Program
 {
-    static void DisplayWelcomeBanner()
-    {
-        Console.WriteLine("=================================");
-        Console.WriteLine("Scripture Memorization Program");
-        Console.WriteLine("=================================");
-    }
-
     static void Main(string[] args)
     {
-        DisplayWelcomeBanner();
-
-        // Initialize core objects
         Scripture scriptureManager = new Scripture();
         Generator generator = new Generator();
-        List<Scripture> scriptures = new List<Scripture>();
-
         bool isRunning = true;
+
         while (isRunning)
         {
-            try
+            scriptureManager.OptionMenu();
+            Console.Write("\nSelect an option (1-4): ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
             {
-                scriptureManager.OptionMenu();
-                Console.Write("\nSelect a menu option (1-5): ");
-                string userChoice = Console.ReadLine();
-
-                switch (userChoice)
-                {
-                    case "1": // Add Scripture
-                        AddNewScripture(scriptures);
-                        break;
-
-                    case "2": // Remove Scripture
-                        RemoveExistingScripture(scriptures);
-                        break;
-
-                    case "3": // Random Scripture
-                        generator.ScriptureGenerator(scriptures);
-                        break;
-
-                    case "4": // Practice Mode
-                        PracticeMemorization(scriptureManager, scriptures);
-                        break;
-
-                    case "5": // Exit
-                        isRunning = false;
-                        Console.WriteLine("\nThank you for using the Scripture Memorization Program!");
-                        break;
-
-                    default:
-                        Console.WriteLine("\nInvalid option. Please select a number between 1-5.");
-                        break;
-                }
-
-                if (isRunning)
-                {
-                    Console.WriteLine("\nPress Enter to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
-                    DisplayWelcomeBanner();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"\nAn error occurred: {ex.Message}");
-                Console.WriteLine("Press Enter to continue...");
-                Console.ReadLine();
-                Console.Clear();
-                DisplayWelcomeBanner();
+                case "1":
+                    ViewAllScriptures(scriptureManager.GetAllScriptures());
+                    break;
+                case "2":
+                    AddNewScripture(scriptureManager);
+                    break;
+                case "3":
+                    PracticeMemorization(scriptureManager.GetRandomScripture());
+                    break;
+                case "4":
+                    isRunning = false;
+                    break;
+                default:
+                    Console.WriteLine("Invalid option. Press any key to continue...");
+                    Console.ReadKey();
+                    break;
             }
         }
     }
 
-    static void AddNewScripture(List<Scripture> scriptures)
+    static void ViewAllScriptures(List<Scripture> scriptures)
     {
-        Console.WriteLine("\n--- Add New Scripture ---");
-        
-        Console.Write("Enter Book (e.g., John): ");
-        string book = Console.ReadLine();
+        Console.Clear();
+        Console.WriteLine("All Scriptures:");
+        foreach (var scripture in scriptures)
+        {
+            Console.WriteLine(scripture.ToString());
+        }
+        Console.WriteLine("\nPress any key to continue...");
+        Console.ReadKey();
+    }
 
-        Console.Write("Enter Chapter: ");
+    static void AddNewScripture(Scripture scriptureManager)
+    {
+        Console.Clear();
+        Console.Write("Enter book: ");
+        string book = Console.ReadLine();
+        
+        Console.Write("Enter chapter: ");
         if (!int.TryParse(Console.ReadLine(), out int chapter))
         {
-            throw new FormatException("Chapter must be a number.");
+            Console.WriteLine("Invalid chapter number.");
+            return;
         }
-
-        Console.Write("Enter Verse: ");
+        
+        Console.Write("Enter verse: ");
         if (!int.TryParse(Console.ReadLine(), out int verse))
         {
-            throw new FormatException("Verse must be a number.");
+            Console.WriteLine("Invalid verse number.");
+            return;
         }
-
-        Console.Write("Enter Category (e.g., Gospel, Prophecy): ");
+        
+        Console.Write("Enter category (e.g., Gospel, Prophecy): ");
         string category = Console.ReadLine();
+        
+        Console.Write("Enter scripture text: ");
+        string text = Console.ReadLine();
 
-        ScriptureManager newScripture = new ScriptureManager(book, chapter, verse, category);
-        scriptures.Add(newScripture);
-        Console.WriteLine("\nScripture added successfully!");
+        // Create new scripture with ScriptureManager constructor
+        ScriptureManager newManager = new ScriptureManager(book, chapter, verse, category, text);
+        Scripture newScripture = new Scripture(newManager);
+
+        scriptureManager.AddEntry(newScripture);
+        Console.WriteLine("\nScripture added successfully! Press any key to continue...");
+        Console.ReadKey();
     }
 
-    static void RemoveExistingScripture(List<Scripture> scriptures)
+    static void PracticeMemorization(Scripture scripture)
     {
-        if (scriptures.Count == 0)
+        if (scripture == null)
         {
-            Console.WriteLine("\nNo scriptures available to remove.");
+            Console.WriteLine("No scriptures available for practice.");
+            Console.ReadKey();
             return;
         }
 
-        Console.WriteLine("\n--- Available Scriptures ---");
-        for (int i = 0; i < scriptures.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {scriptures[i]}");
-        }
+        Console.Clear();
+        Console.WriteLine("Scripture Memorization Practice");
+        Console.WriteLine("Press Enter to hide words, type 'quit' to exit, or 'hint' for help.");
+        Console.WriteLine("\nOriginal scripture:");
+        Console.WriteLine(scripture.ToString());
+        Console.WriteLine("\nPress Enter to begin...");
+        Console.ReadKey();
 
-        Console.Write("\nEnter the number of the scripture to remove: ");
-        if (!int.TryParse(Console.ReadLine(), out int removeIndex) || 
-            removeIndex < 1 || 
-            removeIndex > scriptures.Count)
-        {
-            throw new ArgumentException("Invalid scripture selection.");
-        }
+        Words words = new Words(scripture.GetScriptureManager().GetText());
+        bool practicing = true;
 
-        scriptures.RemoveAt(removeIndex - 1);
-        Console.WriteLine("Scripture removed successfully!");
-    }
-
-    static void PracticeMemorization(Scripture scriptureManager, List<Scripture> scriptures)
-    {
-        if (scriptures.Count == 0)
+        while (practicing)
         {
-            Console.WriteLine("\nNo scriptures available for practice. Please add some scriptures first.");
-            return;
-        }
+            Console.Clear();
+            Console.WriteLine($"Reference: {scripture.GetScriptureManager().GetReference()}");
+            Console.WriteLine("\nCurrent state:");
+            Console.WriteLine(words.GetDisplayText());
+            Console.Write("\nEnter a guess, 'hint', or 'quit': ");
+            
+            string input = Console.ReadLine().Trim();
+            
+            if (input.ToLower() == "quit")
+            {
+                practicing = false;
+            }
+            else if (input.ToLower() == "hint")
+            {
+                string hint;
+                words.CheckWord("", out hint);
+                Console.WriteLine(hint);
+                Console.WriteLine("\nPress Enter to continue...");
+                Console.ReadKey();
+            }
+            else if (string.IsNullOrEmpty(input))
+            {
+                if (!words.HideRandomWord())
+                {
+                    Console.WriteLine("All words are hidden! Try guessing them.");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                string hint;
+                if (words.CheckWord(input, out hint))
+                {
+                    Console.WriteLine("Correct!");
+                }
+                else
+                {
+                    Console.WriteLine("Incorrect. " + hint);
+                }
+                Console.WriteLine("\nPress Enter to continue...");
+                Console.ReadKey();
+            }
 
-        Scripture randomScripture = scriptureManager.GetRandomScripture();
-        if (randomScripture != null)
-        {
-            Words wordHandler = new Words(randomScripture.ToString());
-            
-            Console.WriteLine("\n--- Memorization Practice ---");
-            Console.WriteLine("\nOriginal Scripture:");
-            Console.WriteLine(wordHandler.UnhiddenWord());
-            
-            Console.WriteLine("\nPress Enter when ready to hide random words...");
-            Console.ReadLine();
-            
-            wordHandler.HideRandomWords();
-            Console.WriteLine("\nTry to remember the hidden words:");
-            Console.WriteLine(wordHandler.GetHiddenWord());
-            
-            Console.WriteLine("\nPress Enter to reveal the original scripture...");
-            Console.ReadLine();
-            
-            Console.WriteLine("\nOriginal Scripture:");
-            Console.WriteLine(wordHandler.UnhiddenWord());
+            if (words.IsCompleted())
+            {
+                Console.WriteLine("\nCongratulations! You've memorized the scripture!");
+                Console.WriteLine("Press any key to return to the main menu...");
+                Console.ReadKey();
+                practicing = false;
+            }
         }
     }
 }
