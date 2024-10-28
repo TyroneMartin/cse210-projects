@@ -5,6 +5,11 @@ class Program
 {
     static void Main(string[] args)
     {
+
+    // Welcome Banner
+        Banner Banner = new Banner();
+        Banner.DisplayBanner();
+    
         Scripture scriptureManager = new Scripture();
         Generator generator = new Generator();
         bool isRunning = true;
@@ -12,7 +17,7 @@ class Program
         while (isRunning)
         {
             scriptureManager.OptionMenu();
-            Console.Write("\nSelect an option (1-6): ");
+            Console.Write("\nSelect an option (1-6) or type '0' to exit: ");
             string choice = Console.ReadLine();
 
             switch (choice)

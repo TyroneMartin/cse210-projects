@@ -21,7 +21,7 @@ public class Scripture
     public Scripture()
     {
         _ScriptureAdded = new List<Scripture>();
-        _scriptureManager = new ScriptureManager("John", 3, 16, "Love", 
+        _scriptureManager = new ScriptureManager("John", 3, 16, "Love",
             "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.");
         InitializeDefaultScripture();
     }
@@ -42,6 +42,11 @@ public class Scripture
     public void OptionMenu()
     {
         // Console.Clear();
+
+        // if (!_banner.DisplayBanner())
+        // {
+        //     Console.Clear(); 
+        // }
         Console.WriteLine("");
         Console.WriteLine("Scripture Memorization Program");
         Console.WriteLine("1. View All Scriptures");
