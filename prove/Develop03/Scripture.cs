@@ -41,20 +41,15 @@ public class Scripture
 
     public void OptionMenu()
     {
-        // Console.Clear();
-
-        // if (!_banner.DisplayBanner())
-        // {
-        //     Console.Clear(); 
-        // }
-        Console.WriteLine("");
+        Console.Clear();
+        Console.WriteLine("=================================");
         Console.WriteLine("Scripture Memorization Program");
+        Console.WriteLine("=================================");
+         Console.WriteLine("");
         Console.WriteLine("1. View All Scriptures");
         Console.WriteLine("2. Add Scripture");
         Console.WriteLine("3. Practice Memorization");
-        Console.WriteLine("4. Filter by category (e.g., Love, Mercy, etc.)");
-        Console.WriteLine("5. Filter by book (e.g., John, Psalms, etc.)");
-        Console.WriteLine("6. Remove Existing Scripture");
+        Console.WriteLine("4. Remove Existing Scripture");
         Console.WriteLine("0. Exit");
     }
 

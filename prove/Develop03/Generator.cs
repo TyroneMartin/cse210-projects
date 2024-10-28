@@ -3,9 +3,8 @@
 // *_RandomScripturePrompt : List
 
 // * Behaviors/Methods:
-// * ScriptureGenerator() 
-// * FilterByCategory(Category : string) : List
-// * FilterByBook(Book : string) : List
+// * Generator()
+// * ScriptureGenerator(): void
 
 public class Generator
 {
@@ -28,16 +27,6 @@ public class Generator
         int index = random.Next(scriptures.Count);
         Scripture selectedScripture = scriptures[index];
         Console.WriteLine($"Random Scripture: {selectedScripture}");
-    }
-
-    public List<Scripture> FilterByCategory(List<Scripture> scriptures, string category)
-    {
-        return scriptures.Where(s => s.GetScriptureManager().GetCategory() == category).ToList();
-    }
-
-    public List<Scripture> FilterByBook(List<Scripture> scriptures, string book)
-    {
-        return scriptures.Where(s => s.GetScriptureManager().GetReference().StartsWith(book)).ToList();
     }
 
     public void AddToPromptList(string scripture)

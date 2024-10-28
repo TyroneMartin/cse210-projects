@@ -6,10 +6,6 @@ class Program
     static void Main(string[] args)
     {
 
-    // Welcome Banner
-        Banner Banner = new Banner();
-        Banner.DisplayBanner();
-    
         Scripture scriptureManager = new Scripture();
         Generator generator = new Generator();
         bool isRunning = true;
@@ -31,20 +27,9 @@ class Program
                 case "3":
                     PracticeMemorization(scriptureManager.GetRandomScripture()); // Practice memorization
                     break;
-
-                case "4":   // Filter by category
-                    List<Scripture> filteredScriptures = generator.FilterByCategory(scriptureManager.GetAllScriptures(), "Folk");
-                    ViewAllScriptures(filteredScriptures);
+                case "4":   // Remove existing scripture 
+                    RemoveExistingScripture(scriptureManager.GetAllScriptures());
                     break;
-
-                case "5":   // Filter by book
-                    List<Scripture> filteredScriptures2 = generator.FilterByBook(scriptureManager.GetAllScriptures(), "John");
-                    ViewAllScriptures(filteredScriptures2);
-                    break; 
-
-                case "6":   // Remove existing scripture 
-                RemoveExistingScripture(scriptureManager.GetAllScriptures());
-                break;
                 case "0": // Exit
                     isRunning = false;
                     break;
@@ -71,26 +56,26 @@ class Program
     static void AddNewScripture(Scripture scriptureManager)
     {
         Console.Clear();
-        Console.Write("Enter book: ");
+        Console.Write("Enter book names only e.g., (John): ");
         string book = Console.ReadLine();
-        
+
         Console.Write("Enter chapter: ");
         if (!int.TryParse(Console.ReadLine(), out int chapter))
         {
-            Console.WriteLine("Invalid chapter number.");
+            Console.WriteLine("Invalid chapter number, please enter a valid number.");
             return;
         }
-        
+
         Console.Write("Enter verse: ");
         if (!int.TryParse(Console.ReadLine(), out int verse))
         {
-            Console.WriteLine("Invalid verse number.");
+            Console.WriteLine("Invalid verse number, please enter a valid number.");
             return;
         }
-        
-        Console.Write("Enter category (e.g., Gospel, Prophecy): ");
+
+        Console.Write("Enter category (e.g., Love, Mercy): ");
         string category = Console.ReadLine();
-        
+
         Console.Write("Enter scripture text: ");
         string text = Console.ReadLine();
 
@@ -103,71 +88,90 @@ class Program
         Console.ReadKey();
     }
 
-//  static void RemoveExistingScripture(List<Scripture> scriptures)
-//     {
-//         if (scriptures.Count == 0)
-//         {
-//             Console.WriteLine("\nNo scriptures available to remove.");
-//             return;
-//         }
+    //  static void RemoveExistingScripture(List<Scripture> scriptures)
+    //     {
+    //         if (scriptures.Count == 0)
+    //         {
+    //             Console.WriteLine("\nNo scriptures available to remove.");
+    //             return;
+    //         }
 
-//         Console.WriteLine("\n--- Available Scriptures ---");
-//         for (int i = 0; i < scriptures.Count; i++)
-//         {
-//             Console.WriteLine($"{i + 1}. {scriptures[i]}");
-//         }
+    //         Console.WriteLine("\n--- Available Scriptures ---");
+    //         for (int i = 0; i < scriptures.Count; i++)
+    //         {
+    //             Console.WriteLine($"{i + 1}. {scriptures[i]}");
+    //         }
 
-//         Console.Write("\nEnter the number of the scripture to remove: ");
-//         if (!int.TryParse(Console.ReadLine(), out int removeIndex) || 
-//             removeIndex < 1 || 
-//             removeIndex > scriptures.Count)
-//         {
-//             throw new ArgumentException("Invalid scripture selection.");
-//         }
+    //         Console.Write("\nEnter the number of the scripture to remove: ");
+    //         if (!int.TryParse(Console.ReadLine(), out int removeIndex) || 
+    //             removeIndex < 1 || 
+    //             removeIndex > scriptures.Count)
+    //         {
+    //             throw new ArgumentException("Invalid scripture selection.");
+    //         }
 
-//         scriptures.RemoveAt(removeIndex - 1);
-//         Console.WriteLine("Scripture removed successfully!");
-//     }
+    //         scriptures.RemoveAt(removeIndex - 1);
+    //         Console.WriteLine("Scripture removed successfully!");
+    //     }
 
 
-static void RemoveExistingScripture(List<Scripture> scriptures)
-{
-    if (scriptures.Count == 0)
+    static void RemoveExistingScripture(List<Scripture> scriptures)
     {
-        Console.WriteLine("\nNo scriptures available to remove.");
-        return;
-    }
-
-    Console.WriteLine("\n--- Available Scriptures ---");
-    for (int i = 0; i < scriptures.Count; i++)
-    {
-        Console.WriteLine($"{i + 1}. {scriptures[i]}");
-    }
-    Console.WriteLine("Enter 0 to go back to the main menu.");
-
-    while (true)
-    {
-        Console.Write("\nEnter the number of the scripture to remove: ");
-        
-        if (int.TryParse(Console.ReadLine(), out int removeIndex))
+        if (scriptures.Count == 0)
         {
-            if (removeIndex == 0)
+            Console.WriteLine("\nNo scriptures available to remove.");
+            return;
+        }
+
+        // Display available scriptures
+        Console.WriteLine("\n--- Available Scriptures ---");
+        for (int i = 0; i < scriptures.Count; i++)
+        {
+            // Console.WriteLine($"{i + 1}. {scriptures.ElementAt(i)}");
+            var scripture = scriptures.ElementAt(i);
+            var reference = scripture.GetScriptureManager().GetReference();
+            var text = scripture.GetScriptureManager().GetText().TrimEnd('.');
+            var category = scripture.GetScriptureManager().GetCategory();
+            Console.WriteLine($"{i + 1}. {reference} (Category: {category}) - {text}");
+        }
+        Console.WriteLine("");
+        Console.WriteLine("Enter 0 to go back to the main menu.");
+
+        while (true)
+        {
+            Console.Write("\nEnter the number of the scripture to remove or '0' to go back: ");
+
+            if (int.TryParse(Console.ReadLine(), out int removeIndex))
             {
-                //  exit to the main menu
-                Console.WriteLine("Returning to main menu...");
-                return;
+                if (removeIndex == 0)
+                {
+                    // Exit to the main menu
+                    Console.WriteLine("Returning to main menu...");
+                    return;
+                }
+                else if (removeIndex == 1)
+                {
+                    // Prevent user from deleting default scripture
+                    Console.WriteLine("Notice: (You are not allowed to remove the default scripture.");
+                    Console.WriteLine("         Try adding one of your own scriptures first to remove.) ");
+                }
+                else if (removeIndex > 1 && removeIndex <= scriptures.Count)
+                {
+                    scriptures.RemoveAt(removeIndex - 1);
+                    Console.WriteLine("Scripture removed successfully!");
+                    return; // Exit 
+                }
+                else
+                {
+                    Console.WriteLine("Invalid selection. Please enter a valid scripture number or '0' to go back.");
+                }
             }
-            else if (removeIndex >= 1 && removeIndex <= scriptures.Count)
+            else
             {
-                scriptures.RemoveAt(removeIndex - 1);
-                Console.WriteLine("Scripture removed successfully!");
-                return; // Exit 
+                Console.WriteLine("Invalid input. Please enter a valid number or type '0' to go back.");
             }
         }
-        
-        Console.WriteLine("Invalid selection. Please enter a valid scripture number or 0 to go back.");
     }
-}
 
 
     static void PracticeMemorization(Scripture scripture)
@@ -198,9 +202,9 @@ static void RemoveExistingScripture(List<Scripture> scriptures)
             Console.WriteLine(words.GetDisplayText());
             Console.WriteLine("\nInstructions: Press the Enter key to hide a word then type");
             Console.Write(" in your guess, or type'hint,' to get a hint or 'quit' to exit.");
-            
+
             string input = Console.ReadLine().Trim();
-            
+
             if (input.ToLower() == "quit")
             {
                 practicing = false;
