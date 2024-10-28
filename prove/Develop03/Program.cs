@@ -124,6 +124,7 @@ class Program
         }
 
         // Display available scriptures
+        Console.Clear();
         Console.WriteLine("\n--- Available Scriptures ---");
         for (int i = 0; i < scriptures.Count; i++)
         {
