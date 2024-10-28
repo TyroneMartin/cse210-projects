@@ -21,8 +21,8 @@ public class Scripture
     public Scripture()
     {
         _ScriptureAdded = new List<Scripture>();
-        _scriptureManager = new ScriptureManager("John", 3, 16, "Gospel", 
-            "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.");
+        _scriptureManager = new ScriptureManager("John", 3, 16, "Love", 
+            "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.");
         InitializeDefaultScripture();
     }
 
@@ -41,14 +41,16 @@ public class Scripture
 
     public void OptionMenu()
     {
-        Console.Clear();
+        // Console.Clear();
+        Console.WriteLine("");
         Console.WriteLine("Scripture Memorization Program");
         Console.WriteLine("1. View All Scriptures");
         Console.WriteLine("2. Add Scripture");
         Console.WriteLine("3. Practice Memorization");
-        Console.WriteLine("4. Exit");
-        // Console.WriteLine("5. Remove Scripture");
-        // Console.WriteLine("6. View Random Scripture");
+        Console.WriteLine("4. Filter by category (e.g., Love, Mercy, etc.)");
+        Console.WriteLine("5. Filter by book (e.g., John, Psalms, etc.)");
+        Console.WriteLine("6. Remove Existing Scripture");
+        Console.WriteLine("0. Exit");
     }
 
     public void AddEntry(Scripture scripture)
