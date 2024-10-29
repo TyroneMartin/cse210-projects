@@ -7,15 +7,10 @@ class Program
     {
         // Create an instance of the User
         User user = new User();
-        user.DisplayUserName();  // Display the user's name
-
-        // Create an instance of the Journal
-        Journal journal = new Journal();
-        // journal._user = user;
-
-        // Display the journal menu
-        journal.DisplayMenu();
-   
-
+        user.InitializeUser(); // get user name
+        user.DisplayUserName();
+        // Pass  user instance to the Journal
+        Journal journal = new Journal(user);
+        journal.DisplayMenu(); // display menu
     }
 }
