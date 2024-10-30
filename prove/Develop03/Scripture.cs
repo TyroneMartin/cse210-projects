@@ -15,6 +15,8 @@ using System.Collections.Generic;
 
 public class Scripture
 {
+
+    
     private List<Scripture> _ScriptureAdded;
     private ScriptureManager _scriptureManager;  // default scripture added stored in object
 
