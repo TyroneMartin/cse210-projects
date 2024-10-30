@@ -17,7 +17,7 @@ public class Scripture
 {
 
     
-    private List<Scripture> _ScriptureAdded;
+    // private List<Scripture> _ScriptureAdded;
     private ScriptureManager _scriptureManager;  // default scripture added stored in object
 
     public Scripture()
