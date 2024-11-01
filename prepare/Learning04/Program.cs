@@ -6,7 +6,7 @@ class Program
     {
         // Create a base "Assignment" object
         Console.Clear();
-        Assignment assignment1 = new Assignment("Samuel Bennett", "Multiplication");
+        Assignment assignment1 = new Assignment("\nSamuel Bennett", "Multiplication");
         Console.WriteLine(assignment1.GetSummary());
 
         // Now create the derived class assignments
@@ -15,8 +15,8 @@ class Program
         Console.WriteLine(assignment2.GetHomeworkList());
 
         WritingAssignment assignment3 = new WritingAssignment("\nMary Waters", "European History", "The Causes of World War II");
-        Console.WriteLine(assignment3.GetSummary());
-        Console.WriteLine(assignment3.GetWritingInformation());
+        Console.WriteLine(assignment3.GetSummary()); // name + topic
+        Console.WriteLine(assignment3.GetWritingInformation()); // student name + title
         Console.WriteLine("");
     }
 }
