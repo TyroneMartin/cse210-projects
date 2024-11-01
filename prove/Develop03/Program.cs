@@ -13,7 +13,7 @@ class Program
         while (isRunning)
         {
             scriptureManager.OptionMenu();
-            Console.Write("\nSelect an option (1-6) or type '0' to exit: ");
+            Console.Write("\nSelect an option (1-4) or type '0' to exit: ");
             string choice = Console.ReadLine();
 
             switch (choice)
