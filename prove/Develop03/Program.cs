@@ -5,6 +5,7 @@ class Program
     static void Main(string[] args)
     {
         ScriptureManager scripture = new ScriptureManager();
+
         bool isRunning = true;
 
         while (isRunning)
@@ -41,7 +42,6 @@ class Program
 
     static void DisplayMenu()
     {
-        Console.Clear();
         Console.WriteLine("=================================");
         Console.WriteLine("Scripture Memorization Program");
         Console.WriteLine("=================================");

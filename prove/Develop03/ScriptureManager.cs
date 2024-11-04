@@ -73,11 +73,12 @@ public class ScriptureManager
         }
 
         Console.Clear();
+        // Console.WriteLine("---Press Enter to start!---");
         Console.WriteLine("Scripture Memorization Practice");
-        Console.WriteLine("Press Enter to hide words, type 'quit' to exit, or 'hint' for help.");
-        Console.WriteLine("\nOriginal scripture:");
+        Console.WriteLine("\nTry to memorize the scripture below:");
+        Console.WriteLine("");
         Console.WriteLine(scripture.ToString());
-        Console.WriteLine("\nPress Enter to begin...");
+        Console.WriteLine("\nPress Enter to begin guessing...");
         Console.ReadKey();
 
         bool practicing = true;
@@ -139,52 +140,29 @@ public class ScriptureManager
         }
     }
 
-
     public bool RemoveScripture()
     {
         Console.Clear();
         Console.WriteLine("Remove Scripture");
 
-        // Check if there's only the default scripture
+        // Check for default scripture
         if (_scriptures.Count <= 1)
         {
-            Console.WriteLine("\nWarning: (You are not allowed to remove the default scripture.");
-            Console.WriteLine("         Try adding one of your own scriptures first to remove.)");
+            Console.WriteLine("\nWarning: You are not allowed to remove the default scripture.");
+            Console.WriteLine("         Try adding one of your own scriptures first to remove.");
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             return false;
         }
 
-        Console.Clear();
+        // Console.Clear();
         Console.WriteLine("\n--- Available Scriptures ---");
-      
 
-        for (int i = 0; i < scriptures.Count; i++)
+        for (int i = 0; i < _scriptures.Count; i++)
         {
-            var scripture = scriptures.ElementAt(i); 
-            var reference = scripture.Reference;
-            var category = scripture.Category; 
-            var words = scripture.Words; 
-
-            // Use reference, text, and category as needed
-            Console.WriteLine($"Reference: {reference}, Text: {words}, Category: {category}");
-
+            Console.WriteLine($"\n{i + 1}. {_scriptures[i]}");
         }
 
-        //    for (int i = 0; i < scriptures.Count; i++)
-        // {
-        //     // Console.WriteLine($"{i + 1}. {scriptures.ElementAt(i)}");
-        //     var scripture = scriptures.ElementAt(i);
-        //     var reference = scripture.GetScriptureManager().GetReference();
-        //     var text = scripture.GetScriptureManager().GetText().TrimEnd('.');
-        //     var category = scripture.GetScriptureManager().GetCategory();
-        //     Console.WriteLine($"{i + 1}. {reference} (Category: {category}) - {text}");
-        // }
-
-        Console.WriteLine("");
-        Console.WriteLine("Enter 0 to go back to the main menu.");
-
-        // Loop until the user enters a valid option or exits
         while (true)
         {
             Console.Write("\nEnter the number of the scripture to remove or '0' to go back: ");
@@ -199,8 +177,8 @@ public class ScriptureManager
                 }
                 else if (removeIndex == 1)
                 {
-                    // Prevent user from deleting the default scripture
-                    Console.WriteLine("Notice: (You are not allowed to remove the default scripture.");
+                    // warning message for default scripture
+                    Console.WriteLine("Warning: (You are not allowed to remove the default scripture.");
                     Console.WriteLine("         Try adding one of your own scriptures first to remove.)");
                 }
                 else if (removeIndex > 1 && removeIndex <= _scriptures.Count)
@@ -222,8 +200,6 @@ public class ScriptureManager
             }
         }
     }
-
-
     private Scripture GetRandomScripture()
     {
         if (_scriptures.Count == 0) return null;
