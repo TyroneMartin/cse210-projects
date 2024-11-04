@@ -88,33 +88,6 @@ class Program
         Console.ReadKey();
     }
 
-    //  static void RemoveExistingScripture(List<Scripture> scriptures)
-    //     {
-    //         if (scriptures.Count == 0)
-    //         {
-    //             Console.WriteLine("\nNo scriptures available to remove.");
-    //             return;
-    //         }
-
-    //         Console.WriteLine("\n--- Available Scriptures ---");
-    //         for (int i = 0; i < scriptures.Count; i++)
-    //         {
-    //             Console.WriteLine($"{i + 1}. {scriptures[i]}");
-    //         }
-
-    //         Console.Write("\nEnter the number of the scripture to remove: ");
-    //         if (!int.TryParse(Console.ReadLine(), out int removeIndex) || 
-    //             removeIndex < 1 || 
-    //             removeIndex > scriptures.Count)
-    //         {
-    //             throw new ArgumentException("Invalid scripture selection.");
-    //         }
-
-    //         scriptures.RemoveAt(removeIndex - 1);
-    //         Console.WriteLine("Scripture removed successfully!");
-    //     }
-
-
     static void RemoveExistingScripture(List<Scripture> scriptures)
     {
         if (scriptures.Count == 0)

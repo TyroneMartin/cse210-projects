@@ -1,6 +1,6 @@
 // class: Generator
 // Attributes: 
-// *_RandomScripturePrompt : List
+// *_randomScripturePrompt : List
 
 // * Behaviors/Methods:
 // * Generator()
@@ -8,11 +8,11 @@
 
 public class Generator
 {
-    private List<string> _RandomScripturePrompt;
+    private List<string> _randomScripturePrompt;
 
     public Generator()
     {
-        _RandomScripturePrompt = new List<string>();
+        _randomScripturePrompt = new List<string>();
     }
 
     public void ScriptureGenerator(List<Scripture> scriptures)
@@ -31,11 +31,11 @@ public class Generator
 
     public void AddToPromptList(string scripture)
     {
-        _RandomScripturePrompt.Add(scripture);
+        _randomScripturePrompt.Add(scripture);
     }
 
     public List<string> GetPromptList()
     {
-        return _RandomScripturePrompt;
+        return _randomScripturePrompt;
     }
 }

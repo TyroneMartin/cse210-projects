@@ -1,9 +1,9 @@
 // class: Words
 // Attributes: 
-// *_Words : list
-// *_IsHidden : list
+// *_words : list
+// *_isHidden : list
 // *_Random : random
-// *_RemainingWords : int
+// *_remainingWords : int
 
 // * Behaviors/Methods:
 // * HideRandomWord() : bool
@@ -14,37 +14,37 @@
 
 public class Words
 {
-    private List<string> _Words;
-    private List<bool> _IsHidden;
-    private Random _Random;
-    private int _RemainingWords;
+    private List<string> _words;
+    private List<bool> _isHidden;
+    private Random _random;
+    private int _remainingWords;
 
     public Words(string text)
     {
-        _Words = text.Split(' ').ToList();
-        _IsHidden = new List<bool>(_Words.Count);
-        _Random = new Random();
-        _RemainingWords = _Words.Count;
-        
+        _words = text.Split(' ').ToList();
+        _isHidden = new List<bool>(_words.Count);
+        _random = new Random();
+        _remainingWords = _words.Count;
+
         // Initialize all words as visible
-        for (int i = 0; i < _Words.Count; i++)
+        for (int i = 0; i < _words.Count; i++)
         {
-            _IsHidden.Add(false);
+            _isHidden.Add(false);
         }
     }
 
     public bool HideRandomWord()
     {
-        if (_RemainingWords == 0) return false;
+        if (_remainingWords == 0) return false;
 
         int attempts = 0;
-        while (attempts < _Words.Count)
+        while (attempts < _words.Count)
         {
-            int index = _Random.Next(_Words.Count);
-            if (!_IsHidden[index])
+            int index = _random.Next(_words.Count);
+            if (!_isHidden[index])
             {
-                _IsHidden[index] = true;
-                _RemainingWords--;
+                _isHidden[index] = true;
+                _remainingWords--;
                 return true;
             }
             attempts++;
@@ -55,9 +55,9 @@ public class Words
     public string GetDisplayText()
     {
         List<string> displayWords = new List<string>();
-        for (int i = 0; i < _Words.Count; i++)
+        for (int i = 0; i < _words.Count; i++)
         {
-            displayWords.Add(_IsHidden[i] ? new string('_', _Words[i].Length) : _Words[i]);
+            displayWords.Add(_isHidden[i] ? new string('_', _words[i].Length) : _words[i]);
         }
         return string.Join(" ", displayWords);
     }
@@ -65,21 +65,21 @@ public class Words
     public bool CheckWord(string guess, out string hint)
     {
         hint = "";
-        for (int i = 0; i < _Words.Count; i++)
+        for (int i = 0; i < _words.Count; i++)
         {
-            if (_IsHidden[i] && _Words[i].Equals(guess, StringComparison.OrdinalIgnoreCase))
+            if (_isHidden[i] && _words[i].Equals(guess, StringComparison.OrdinalIgnoreCase))
             {
-                _IsHidden[i] = false;
+                _isHidden[i] = false;
                 return true;
             }
         }
-        
+
         // Provide hint for the first hidden word
-        for (int i = 0; i < _Words.Count; i++)
+        for (int i = 0; i < _words.Count; i++)
         {
-            if (_IsHidden[i])
+            if (_isHidden[i])
             {
-                hint = $"Hint: The word starts with '{_Words[i][0]}' and has {_Words[i].Length} letters";
+                hint = $"Hint: The word starts with '{_words[i][0]}' and has {_words[i].Length} letters";
                 break;
             }
         }
@@ -88,6 +88,6 @@ public class Words
 
     public bool IsCompleted()
     {
-        return _RemainingWords == 0;
+        return _remainingWords == 0;
     }
 }

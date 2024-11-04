@@ -1,10 +1,10 @@
 // class: ScriptureManager
 // Attributes: 
-// * _Book : string
-// * _Chapter : int
-// * _Verse : int
-// * _Category : string
-// * _Text : string
+// * _book : string
+// * _chapter : int
+// * _verse : int
+// * _category : string
+// * _text : string
 
 // * Behaviors/Methods:
 // * ScriptureManager(string book, int chapter, int verse, string category, string text)
@@ -16,38 +16,38 @@
 
 public class ScriptureManager
 {
-    private string _Book;
-    private int _Chapter;
-    private int _Verse;
-    private string _Category;
-    private string _Text;
+    private string _book;
+    private int _chapter;
+    private int _verse;
+    private string _category;
+    private string _text;
 
     public ScriptureManager(string book, int chapter, int verse, string category, string text)
     {
-        _Book = book;
-        _Chapter = chapter;
-        _Verse = verse;
-        _Category = category;
-        _Text = text;
+        _book = book;
+        _chapter = chapter;
+        _verse = verse;
+        _category = category;
+        _text = text;
     }
 
     public string GetReference()
     {
-        return $"{_Book} {_Chapter}:{_Verse}";
+        return $"{_book} {_chapter}:{_verse}";
     }
 
     public string GetCategory()
     {
-        return _Category;
+        return _category;
     }
 
     public string GetText()
     {
-        return _Text;
+        return _text;
     }
 
     public override string ToString()
     {
-        return $"{GetReference()} - {_Text}";
+        return $"{GetReference()} - {_text}";
     }
 }
