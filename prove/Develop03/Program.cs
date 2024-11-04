@@ -9,6 +9,7 @@ class Program
 
         while (isRunning)
         {
+            Console.Clear();
             DisplayMenu();
             Console.Write("\nSelect an option (1-4) or type '0' to exit: ");
             string userChoice = Console.ReadLine();

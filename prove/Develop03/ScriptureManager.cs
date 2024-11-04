@@ -103,11 +103,10 @@ public class ScriptureManager
                 case "":
                     if (!scripture.HideRandomWordGroup())
                     {
-                        Console.WriteLine("\nAll words are hidden! Press any key to continue...");
-                        scripture.HideRandomWordGroup();
                         Console.ReadKey();
-                        RevealAllWords();
-
+                        // Console.WriteLine("\nAll words are hidden! Press any key to continue...");
+                        scripture.RevealAllWords();
+                        // Console.ReadKey();
                         return; //return to main menu
                     }
                     break;
@@ -139,50 +138,96 @@ public class ScriptureManager
             }
         }
     }
+
+
     public bool RemoveScripture()
     {
         Console.Clear();
         Console.WriteLine("Remove Scripture");
 
-        if (_scriptures.Count <= 1)  // if logic
+        // Check if there's only the default scripture
+        if (_scriptures.Count <= 1)
         {
-            // Prevent user from deleting default scripture
-            Console.WriteLine("Warning: (You are not allowed to remove the default scripture.");
-            Console.WriteLine("         Try adding one of your own scriptures first to remove.) ");
+            Console.WriteLine("\nWarning: (You are not allowed to remove the default scripture.");
+            Console.WriteLine("         Try adding one of your own scriptures first to remove.)");
+            Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             return false;
         }
 
-        ViewAllScriptures();
-        Console.Write("\nEnter the number of the scripture to remove (1 is default and cannot be removed): ");
+        Console.Clear();
+        Console.WriteLine("\n--- Available Scriptures ---");
+      
 
-        if (int.TryParse(Console.ReadLine(), out int index) && index > 1 && index <= _scriptures.Count)
+        for (int i = 0; i < scriptures.Count; i++)
         {
-            _scriptures.RemoveAt(index - 1);
-            Console.WriteLine("Scripture removed successfully!");
-            return true;
+            var scripture = scriptures.ElementAt(i); 
+            var reference = scripture.Reference;
+            var category = scripture.Category; 
+            var words = scripture.Words; 
+
+            // Use reference, text, and category as needed
+            Console.WriteLine($"Reference: {reference}, Text: {words}, Category: {category}");
+
         }
-        else
+
+        //    for (int i = 0; i < scriptures.Count; i++)
+        // {
+        //     // Console.WriteLine($"{i + 1}. {scriptures.ElementAt(i)}");
+        //     var scripture = scriptures.ElementAt(i);
+        //     var reference = scripture.GetScriptureManager().GetReference();
+        //     var text = scripture.GetScriptureManager().GetText().TrimEnd('.');
+        //     var category = scripture.GetScriptureManager().GetCategory();
+        //     Console.WriteLine($"{i + 1}. {reference} (Category: {category}) - {text}");
+        // }
+
+        Console.WriteLine("");
+        Console.WriteLine("Enter 0 to go back to the main menu.");
+
+        // Loop until the user enters a valid option or exits
+        while (true)
         {
-            Console.WriteLine("Invalid selection or cannot remove default scripture.");
-            return false;
+            Console.Write("\nEnter the number of the scripture to remove or '0' to go back: ");
+
+            if (int.TryParse(Console.ReadLine(), out int removeIndex))
+            {
+                if (removeIndex == 0)
+                {
+                    // Exit to the main menu
+                    Console.WriteLine("Returning to main menu...");
+                    return false;
+                }
+                else if (removeIndex == 1)
+                {
+                    // Prevent user from deleting the default scripture
+                    Console.WriteLine("Notice: (You are not allowed to remove the default scripture.");
+                    Console.WriteLine("         Try adding one of your own scriptures first to remove.)");
+                }
+                else if (removeIndex > 1 && removeIndex <= _scriptures.Count)
+                {
+                    _scriptures.RemoveAt(removeIndex - 1);
+                    Console.WriteLine("\nScripture removed successfully!");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid selection. Please enter a valid scripture number or '0' to go back.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid number or type '0' to go back.");
+            }
         }
     }
+
 
     private Scripture GetRandomScripture()
     {
         if (_scriptures.Count == 0) return null;
         Random random = new Random();
         return _scriptures[random.Next(_scriptures.Count)];
-    }
-
-    private void RevealAllWords()
-    {
-        foreach (Scripture scripture in _scriptures)
-        {
-            Console.WriteLine(scripture.GetDisplayText());
-
-        }
-
     }
 }

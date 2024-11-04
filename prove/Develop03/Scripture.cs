@@ -16,8 +16,6 @@ public class Scripture
         _random = new Random();
     }
 
-
-
     //  public bool HideRandomWord()
     //     {
     //         if (_RemainingWords == 0) return false;
@@ -40,20 +38,26 @@ public class Scripture
 
     public bool HideRandomWordGroup()
     {
-        var visibleWords = _words.Select((word, index) => new { Word = word, Index = index })
-                                .Where(w => !w.Word.IsHidden())
-                                .ToList();
+        var visibleWords = _words.Where(word => !word.IsHidden()).ToList();
 
-        if (visibleWords.Count == 0) return false;
+        if (visibleWords.Count == 0) return false; // No words left to hide
 
         int wordsToHide = Math.Min(GROUP_WORDS, visibleWords.Count);
         for (int i = 0; i < wordsToHide; i++)
         {
             int randomIndex = _random.Next(visibleWords.Count);
-            visibleWords[randomIndex].Word.Hide();
+            visibleWords[randomIndex].Hide();
             visibleWords.RemoveAt(randomIndex);
         }
         return true;
+    }
+
+    public void RevealAllWords()
+    {
+        foreach (var word in _words)
+        {
+            word.Show(); // Make each word visible
+        }
     }
 
     public string GetDisplayText()
