@@ -1,83 +1,99 @@
-
 using System;
 using System.Collections.Generic;
-// class: Scripture
-// Attributes: 
-// * _scriptureAdded : list
-// * _scriptureManager
-
-// * Behaviors/Methods:
-// * +OptionMenu() 
-// * AddScripture(Scripture : scripture) : void
-// * RemoveScripture(Scripture : scripture) : void
-// * GetRandomScripture() : scripture
-// * ReferenceId() : string
-
 public class Scripture
 {
+    private Reference _reference;
+    private List<Word> _words;
+    private string _category;
+    private Random _random;
+    private const int GROUP_WORDS = 3;
 
-    private List<Scripture> _scriptureAdded;
-    private ScriptureManager _scriptureManager;  // default scripture added stored in object
-
-    public Scripture()
+    public Scripture(string book, int chapter, int verse, string category, string text)
     {
-        _scriptureAdded = new List<Scripture>();
-        _scriptureManager = new ScriptureManager("John", 3, 16, "Love",
-            "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.");
-        InitializeDefaultScripture();
+        _reference = new Reference(book, chapter, verse);
+        _category = category;
+        _words = text.Split(' ').Select(word => new Word(word)).ToList();
+        _random = new Random();
     }
 
-    //  for adding new scriptures to the list
-    public Scripture(ScriptureManager scriptureManager)
+
+
+    //  public bool HideRandomWord()
+    //     {
+    //         if (_RemainingWords == 0) return false;
+
+    //         int attempts = 0;
+    //         while (attempts < _Words.Count)
+    //         {
+    //             int index = _Random.Next(_Words.Count);
+    //             if (!_IsHidden[index])
+    //             {
+    //                 _IsHidden[index] = true;
+    //                 _RemainingWords--;
+    //                 return true;
+    //             }
+    //             attempts++;
+    //         }
+    //         return false;
+    //     }
+
+
+    public bool HideRandomWordGroup()
     {
-        _scriptureAdded = new List<Scripture>();
-        _scriptureManager = scriptureManager;
+        var visibleWords = _words.Select((word, index) => new { Word = word, Index = index })
+                                .Where(w => !w.Word.IsHidden())
+                                .ToList();
+
+        if (visibleWords.Count == 0) return false;
+
+        int wordsToHide = Math.Min(GROUP_WORDS, visibleWords.Count);
+        for (int i = 0; i < wordsToHide; i++)
+        {
+            int randomIndex = _random.Next(visibleWords.Count);
+            visibleWords[randomIndex].Word.Hide();
+            visibleWords.RemoveAt(randomIndex);
+        }
+        return true;
     }
 
-    private void InitializeDefaultScripture()
+    public string GetDisplayText()
     {
-        // Instead for creating a new Scripture
-        _scriptureAdded.Add(this);
+        return $"{_reference}\n{string.Join(" ", _words.Select(w => w.GetDisplayText()))}";
     }
 
-    public void OptionMenu()
+    public bool CheckWord(string guess, out string hint)
     {
-        Console.Clear();
-        Console.WriteLine("=================================");
-        Console.WriteLine("Scripture Memorization Program");
-        Console.WriteLine("=================================");
-        Console.WriteLine("");
-        Console.WriteLine("1. View All Scriptures");
-        Console.WriteLine("2. Add Scripture");
-        Console.WriteLine("3. Practice Memorization");
-        Console.WriteLine("4. Remove Existing Scripture");
-        Console.WriteLine("0. Exit");
+        hint = "";
+        var hiddenWords = _words.Where(w => w.IsHidden()).ToList();
+
+        foreach (var word in hiddenWords)
+        {
+            if (word.CheckWord(guess))
+            {
+                word.Show();
+                return true;
+            }
+        }
+
+        if (hiddenWords.Any())
+        {
+            hint = hiddenWords.First().GetHint();
+        }
+        return false;
     }
 
-    public void AddEntry(Scripture scripture)
+    public bool IsCompleted()
     {
-        _scriptureAdded.Add(scripture);
+        return !_words.Any(w => w.IsHidden());
     }
 
-    public List<Scripture> GetAllScriptures()
+    public string GetCategory()
     {
-        return _scriptureAdded;
-    }
-
-    public Scripture GetRandomScripture()
-    {
-        if (_scriptureAdded.Count == 0) return null;
-        Random random = new Random();
-        return _scriptureAdded[random.Next(_scriptureAdded.Count)];
-    }
-
-    public ScriptureManager GetScriptureManager()
-    {
-        return _scriptureManager;
+        return _category;
     }
 
     public override string ToString()
     {
-        return _scriptureManager.ToString();
+        return $"{_reference} (Category: {_category})\n{string.Join(" ", _words.Select(w => w.GetDisplayText()))}";
     }
 }

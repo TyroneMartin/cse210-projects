@@ -1,40 +1,31 @@
-// class: Generator
-// Attributes: 
-// *_randomScripturePrompt : List
-
-// * Behaviors/Methods:
-// * Generator()
-// * ScriptureGenerator(): void
-
 public class Generator
 {
-    private List<string> _randomScripturePrompt;
+    private List<Scripture> _randomScripturePrompt;
 
     public Generator()
     {
-        _randomScripturePrompt = new List<string>();
+        _randomScripturePrompt = new List<Scripture>();
     }
 
-    public void ScriptureGenerator(List<Scripture> scriptures)
+    public Scripture ScriptureGenerator()
     {
-        if (scriptures == null || scriptures.Count == 0)
+        if (_randomScripturePrompt == null || _randomScripturePrompt.Count == 0)
         {
             Console.WriteLine("No scriptures available.");
-            return;
+            return null;
         }
 
         Random random = new Random();
-        int index = random.Next(scriptures.Count);
-        Scripture selectedScripture = scriptures[index];
-        Console.WriteLine($"Random Scripture: {selectedScripture}");
+        int index = random.Next(_randomScripturePrompt.Count);
+        return _randomScripturePrompt[index];
     }
 
-    public void AddToPromptList(string scripture)
+    public void AddToPromptList(Scripture scripture)
     {
         _randomScripturePrompt.Add(scripture);
     }
 
-    public List<string> GetPromptList()
+    public List<Scripture> GetPromptList()
     {
         return _randomScripturePrompt;
     }
