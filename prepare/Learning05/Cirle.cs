@@ -14,14 +14,13 @@ public class Circle : Shape
         return Math.PI * _radius * _radius;
     }
 
-    public GetRadius()
+    public double GetRadius()
     {
         return _radius;
     }
 
-    public SetRadius(double radius)
+    public void SetRadius(double radius)
     {
         _radius = radius;
     }
-
 }

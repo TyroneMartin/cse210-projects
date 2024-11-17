@@ -11,24 +11,17 @@ public class Rectangle : Shape
         _length = length;
     }
 
-
     public override double GetArea()
     {
         return _width * _length;
     }
 
-
-    // public double GetPerimeter()
-    // {
-    //     return 2 * (_width + _length);
-    // }
-
-    public GetLength()
+    public double GetLength()
     {
         return _length;
     }
 
-    public GetWidth()
+    public double GetWidth()
     {
         return _width;
     }
@@ -42,11 +35,4 @@ public class Rectangle : Shape
     {
         _width = width;
     }
-
-
-
-
-
-
-
 }

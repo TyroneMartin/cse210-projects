@@ -3,24 +3,24 @@ using System;
 public class Square : Shape
 {
 
-    private string _side;
+    private double _side;
 
-    public Square(string color, string side) : base(color)
+    public Square(string color, double side) : base(color)
     {
         _side = side;
     }
 
     public override double GetArea()
     {
-        return double.Parse(_side) * double.Parse(_side);
+        return _side * _side;
     }
 
-    public string GetSide()
+    public double GetSide()
     {
         return _side;
     }
 
-    public void SetSide(string side)
+    public void SetSide(double side)
     {
         _side = side;
     }
