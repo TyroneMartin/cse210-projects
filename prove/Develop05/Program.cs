@@ -49,14 +49,15 @@ public class Program
                     tracker.RecordEvent();
                     break;
                 case "6":
-                    tracker.RemoveCompletedGoals();
                     Console.Clear();
-                    Console.WriteLine("\nCompleted goals removed.\n");
+                    tracker.RemoveCompletedGoals();
+                    Console.WriteLine("\n-> All goals been permanently removed.\n");
                     break;
                 case "7":
-                    Console.WriteLine("Thank you for using the Goal Tracker!");
+                    Console.WriteLine("Goodbye! Thank you for using the Goal Tracker!");
                     return;
                 default:
+                    Console.Clear();
                     Console.WriteLine("Invalid choice. Try again.");
                     break;
             }

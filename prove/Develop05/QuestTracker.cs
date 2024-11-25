@@ -18,7 +18,7 @@ public class QuestTracker
 
     public void RemoveCompletedGoals()
     {
-        goals = goals.Where(g => !g.IsComplete() || g is EternalGoal).ToList();
+        goals = goals.Where(goal => !goal.IsComplete() || goal is EternalGoal).ToList();
     }
 
     public void ListGoals()
@@ -42,14 +42,11 @@ public class QuestTracker
             Console.WriteLine($"{i + 1}. {goals[i]}");
         }
 
-        // Calculate total progress for animation
         int totalProgress = CalculateTotalProgress();
 
-        // Display progress animation
         DisplayProgressAnimation(totalProgress);
 
-        // Display total points after the animation
-        Console.WriteLine($"\nYou have {score} points.\n");
+        Console.WriteLine($"You have {score} points.\n");
     }
 
     private int CalculateTotalProgress()
@@ -66,7 +63,6 @@ public class QuestTracker
         Console.WriteLine("Loading progress!");
         Console.WriteLine("=================");
 
-        // Check if the list of goals is empty
         if (!goals.Any())
         {
             Console.WriteLine("\nNo goals available. Please add goals first!\n");
@@ -85,11 +81,11 @@ public class QuestTracker
         }
 
         Console.Clear();
-        Console.WriteLine("\nYour Goals:\n");
+        Console.WriteLine("Your Goals:\n");
         for (int i = 0; i < goals.Count; i++)
         {
             string goalStatus = goals[i].IsComplete() ? "[X]" : "[ ]";
-            string goalType = goals[i].GetType().Name.Replace("Goal", ""); 
+            string goalType = goals[i].GetType().Name.Replace("Goal", "");
             Console.WriteLine($"{i + 1}. {goalStatus} {goals[i]._name} ({goals[i]._description}) - {goalType}");
         }
 
@@ -102,7 +98,7 @@ public class QuestTracker
         {
             Console.Write(c);
             Console.Out.Flush();
-            Thread.Sleep(500); 
+            Thread.Sleep(500);
         }
 
         if (progress <= 0)
@@ -195,43 +191,37 @@ public class QuestTracker
 
 
     public void SaveProgress(string filename)
-{
-    Console.Clear();
-    Console.WriteLine("=================");
-    Console.WriteLine("Saving progress!");
-    Console.WriteLine("=================");
-
-    // Ensure there are goals to save
-    if (goals == null || !goals.Any())
     {
-        Console.WriteLine("\n=================");
-        Console.WriteLine("Save Failed!");
-        Console.WriteLine("=================\n");
-        Console.WriteLine("-> No goals available to save! Please add a goal first.\n");
-        return;
-    }
+        Console.Clear();
+        Console.WriteLine("=================");
+        Console.WriteLine("Saving Progress!");
+        Console.WriteLine("=================");
 
-    // Prepare data for saving
-    var data = new Dictionary<string, object>
+        if (goals == null || !goals.Any())
+        {
+            Console.WriteLine("-> No goals available to save! Please add a goal first.\n");
+            return;
+        }
+
+        // Prepare data for saving
+        var data = new Dictionary<string, object>
     {
         { "timestamp", DateTime.Now },
         { "score", score },
         { "goals", goals.Select(g => g.SaveEvent()).ToList() }
     };
 
-    try
-    {
-        File.WriteAllText(filename, JsonSerializer.Serialize(data));
-        Console.WriteLine($"\nProgress saved successfully to {filename}.\n");
+        try
+        {
+            File.WriteAllText(filename, JsonSerializer.Serialize(data));
+            Console.WriteLine($"\nProgress saved successfully to {filename}.\n");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("\n-> Error: Save Failed!");
+            Console.WriteLine($"Error: {ex.Message}\n");
+        }
     }
-    catch (Exception ex)
-    {
-        Console.WriteLine("\n=================");
-        Console.WriteLine("Save Failed!");
-        Console.WriteLine("=================\n");
-        Console.WriteLine($"Error: {ex.Message}\n");
-    }
-}
     public void LoadProgress(string filename)
     {
         if (!File.Exists(filename))
@@ -253,11 +243,9 @@ public class QuestTracker
 
             Goal goal = type switch
             {
-                "SimpleGoal" => new SimpleGoal(name, description, points),
-                "EternalGoal" => new EternalGoal(name, description, points),
-                "ChecklistGoal" => new CheckList(name, description, points,
-                    goalData.GetProperty("targetCount").GetInt32(),
-                    goalData.GetProperty("bonusPoints").GetInt32()),
+                "SimpleGoal" => CreateSimpleGoal(goalData, name, description, points),
+                "EternalGoal" => CreateEternalGoal(goalData, name, description, points),
+                "ChecklistGoal" => CreateChecklistGoal(goalData, name, description, points),
                 _ => throw new Exception("Unknown goal type")
             };
 
@@ -265,5 +253,46 @@ public class QuestTracker
         }
 
         Console.WriteLine($"\n-> Progress loaded from ({filename}).\n");
+    }
+
+    private SimpleGoal CreateSimpleGoal(JsonElement goalData, string name, string description, int points)
+    {
+        var goal = new SimpleGoal(name, description, points);
+        if (goalData.TryGetProperty("isComplete", out JsonElement isComplete) && isComplete.GetBoolean())
+        {
+            goal.RecordEvent(); // Mark the goal completed
+        }
+        return goal;
+    }
+
+    private EternalGoal CreateEternalGoal(JsonElement goalData, string name, string description, int points)
+    {
+        var goal = new EternalGoal(name, description, points);
+        if (goalData.TryGetProperty("completeCount", out JsonElement completeCount))
+        {
+            int count = completeCount.GetInt32();
+            for (int i = 0; i < count; i++)
+            {
+                goal.RecordEvent();
+            }
+        }
+        return goal;
+    }
+
+    private CheckList CreateChecklistGoal(JsonElement goalData, string name, string description, int points)
+    {
+        int targetCount = goalData.GetProperty("targetCount").GetInt32();
+        int bonusPoints = goalData.GetProperty("bonusPoints").GetInt32();
+        var goal = new CheckList(name, description, points, bonusPoints, targetCount);
+
+        if (goalData.TryGetProperty("currentCount", out JsonElement currentCount))
+        {
+            int count = currentCount.GetInt32();
+            for (int i = 0; i < count; i++)
+            {
+                goal.RecordEvent();
+            }
+        }
+        return goal;
     }
 }
