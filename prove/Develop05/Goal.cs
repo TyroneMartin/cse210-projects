@@ -1,4 +1,5 @@
 using System;
+using System.Dynamic;
 
 public abstract class Goal
 {
@@ -13,14 +14,41 @@ public abstract class Goal
         _points = points;
     }
 
-    public void SaveEvent()
-    {
-        return; // To be implemented
-    }
+    // public string GetName()
+    // {
+    //     return _name;
+    // }
 
-    public abstract void RecordEvent();
+    //   public string  SetName()
+    // {
+    //     return _name;
+    // }
 
-    public abstract float GetProcess();
+    public abstract int RecordEvent();
+
+    public abstract int GetProgress();
 
     public abstract bool IsComplete();
+
+
+    public virtual string MenuOption()
+    {
+        return $"{_name} ({_description})";
+    }
+
+    public virtual Dictionary<string, object> SaveEvent()
+    {
+        return new Dictionary<string, object>
+        {
+            { "type", GetType().Name },
+            { "name", _name },
+            { "description", _description },
+            { "points", _points }
+        };
+    }
+
+    public override string ToString()
+    {
+        return $"[{(IsComplete() ? "X" : " ")}] {_name} ({_description})";
+    }
 }
