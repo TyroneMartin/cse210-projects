@@ -17,7 +17,7 @@ public class Program
             Console.WriteLine("2. List Goals");
             Console.WriteLine("3. Save Goals");
             Console.WriteLine("4. Load Goals");
-            Console.WriteLine("5. Record Event a Goal completion"); 
+            Console.WriteLine("5. Record Event a Goal completion");
             Console.WriteLine("6. Remove Completed Goals");
             Console.WriteLine("7. Quit");
             Console.Write("\nSelect a choice from the menu: ");
@@ -41,7 +41,7 @@ public class Program
                     Console.WriteLine("===================");
                     Console.WriteLine("Search for a file!");
                     Console.WriteLine("===================");
-                    Console.Write("\n-> Enter filename to load progress: ");
+                    Console.Write("\n     Enter filename to load progress: ");
                     string loadFilename = Console.ReadLine();
                     tracker.LoadProgress(loadFilename);
                     break;
@@ -51,7 +51,10 @@ public class Program
                 case "6":
                     Console.Clear();
                     tracker.RemoveCompletedGoals();
-                    Console.WriteLine("\n-> All goals been permanently removed.\n");
+                    Console.WriteLine(">>>>>>>>>>>>>>>>");
+                    Console.WriteLine("----Note----\n<<<<<<<<<<<<<<<<");
+                    Console.WriteLine("\n-> Completed goals have been removed. (Except Eternal Goals)");
+                    Console.WriteLine("-> Points will roll over to continue your progress.\n");
                     break;
                 case "7":
                     Console.WriteLine("Goodbye! Thank you for using the Goal Tracker!");

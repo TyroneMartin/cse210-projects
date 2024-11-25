@@ -16,10 +16,45 @@ public class QuestTracker
 
     public void AddGoal(Goal goal) => goals.Add(goal);
 
+    // public void RemoveCompletedGoals()
+    // {
+    //     goals = goals.Where(goal => !goal.IsComplete() || goal is EternalGoal).ToList();
+    // }
+
     public void RemoveCompletedGoals()
     {
-        goals = goals.Where(goal => !goal.IsComplete() || goal is EternalGoal).ToList();
+        int initialCount = goals.Count;
+        goals = goals.Where(goal => !goal.IsComplete()).ToList();
+        int remainingCount = goals.Count;
+        int removedCount = initialCount - remainingCount;
+
+        Console.Clear();
+        Console.WriteLine("=====================");
+        Console.WriteLine("Removing Goals Status");
+        Console.WriteLine("=====================");
+
+        if (removedCount > 0)
+        {
+            Console.WriteLine($"\n-> {removedCount} completed goal(s) have been removed.");
+            Console.WriteLine($"-> {remainingCount} goal(s) remaining on your list.");
+
+            if (remainingCount > 0)
+            {
+                Console.WriteLine($"-> You currently have {score} points in total.\n");
+            }
+            else
+            {
+                Console.WriteLine("-> All goals have been cleared from your list.\n");
+            }
+        }
+        else
+        {
+            Console.WriteLine("\n-> No completed goals to remove.");
+            Console.WriteLine($"-> You still have {remainingCount} goal(s) on your list.");
+            Console.WriteLine($"-> Keep working on your goals! Current points: {score}\n");
+        }
     }
+
 
     public void ListGoals()
     {
@@ -108,12 +143,13 @@ public class QuestTracker
         else
         {
             Console.WriteLine($"\nCongrats! You've earned {progress}% completion!\n");
-            Console.WriteLine($"-> Please note eternal goals are counted as completed.\n");
+            Console.WriteLine(">>>>>>>>>>>>>>>>");
+            Console.WriteLine("----Note----\n<<<<<<<<<<<<<<<<\n");
+            Console.WriteLine($"^ Please note eternal goals are counted towards percentage.");
+            Console.WriteLine($"^ However, the points are!\n");
 
         }
     }
-
-
 
     public void RecordEvent()
     {
@@ -224,35 +260,47 @@ public class QuestTracker
     }
     public void LoadProgress(string filename)
     {
-        if (!File.Exists(filename))
+        try
         {
-            Console.WriteLine($"\n-> File not found for ({filename})!\n");
-            return;
-        }
-
-        var data = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(File.ReadAllText(filename));
-        score = data["score"].GetInt32();
-        goals.Clear();
-
-        foreach (var goalData in data["goals"].EnumerateArray())
-        {
-            var type = goalData.GetProperty("type").GetString();
-            var name = goalData.GetProperty("name").GetString();
-            var description = goalData.GetProperty("description").GetString();
-            var points = goalData.GetProperty("points").GetInt32();
-
-            Goal goal = type switch
+            if (!File.Exists(filename))
             {
-                "SimpleGoal" => CreateSimpleGoal(goalData, name, description, points),
-                "EternalGoal" => CreateEternalGoal(goalData, name, description, points),
-                "ChecklistGoal" => CreateChecklistGoal(goalData, name, description, points),
-                _ => throw new Exception("Unknown goal type")
-            };
+                Console.WriteLine($"\n-> File not found: {filename}\n");
+                return;
+            }
 
-            goals.Add(goal);
+            var data = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(File.ReadAllText(filename));
+            score = data["score"].GetInt32();
+            goals.Clear();
+
+            foreach (var goalData in data["goals"].EnumerateArray())
+            {
+                var type = goalData.GetProperty("type").GetString();
+                var name = goalData.GetProperty("name").GetString();
+                var description = goalData.GetProperty("description").GetString();
+                var points = goalData.GetProperty("points").GetInt32();
+
+                Goal goal = type switch
+                {
+                    "SimpleGoal" => CreateSimpleGoal(goalData, name, description, points),
+                    "EternalGoal" => CreateEternalGoal(goalData, name, description, points),
+                    "CheckList" => CreateChecklistGoal(goalData, name, description, points),
+                    _ => throw new Exception($"Unknown goal type: {type}")
+                };
+
+                goals.Add(goal);
+            }
+
+            Console.WriteLine($"\n-> Progress successfully loaded from {filename}\n");
         }
-
-        Console.WriteLine($"\n-> Progress loaded from ({filename}).\n");
+        catch (Exception ex)
+        {
+            Console.Clear();
+            Console.WriteLine("===================");
+            Console.WriteLine("Error Loading File!");
+            Console.WriteLine("===================");
+            Console.WriteLine($"\n-> Error: {ex.Message}");
+            Console.WriteLine("-> Please check if the file is correctly formatted and try again.\n");
+        }
     }
 
     private SimpleGoal CreateSimpleGoal(JsonElement goalData, string name, string description, int points)
@@ -260,7 +308,7 @@ public class QuestTracker
         var goal = new SimpleGoal(name, description, points);
         if (goalData.TryGetProperty("isComplete", out JsonElement isComplete) && isComplete.GetBoolean())
         {
-            goal.RecordEvent(); // Mark the goal completed
+            goal.RecordEvent();
         }
         return goal;
     }
