@@ -2,7 +2,7 @@ public class ReflectionActivity : Activity
 {
     private List<string> _prompts;
     private List<string> _questions;
-    private List<string> _unusedQuestions;
+    private List<string> _unusedQuestions;  // this way is slower, a better way is to use shuffled list to the end
     private Random _random;
 
     public ReflectionActivity()

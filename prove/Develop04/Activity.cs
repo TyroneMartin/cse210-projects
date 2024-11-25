@@ -14,6 +14,8 @@ public abstract class Activity
         _description = description;
     }
 
+    // https://byui-cse.github.io/cse210-course-2023/unit05/prepare.html
+    // The abstract keyword indicates that the method is intended to be overridden by a subclass.
     public abstract void Run();
 
     public void DisplayStartingMessage()
@@ -64,7 +66,7 @@ public abstract class Activity
         }
 
         Console.Write("\r                            "); // clear the line
-        Console.WriteLine(); 
+        Console.WriteLine();
     }
 
     public int GetDuration()
