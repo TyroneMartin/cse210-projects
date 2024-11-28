@@ -29,7 +29,8 @@ Follow these steps to compile the project using the .NET SDK:
    Use the following command to build the project:
 
    ```bash
-   dotnet build
+   dotnet build OR dotnet new console
+
    ```
 
 4. **Run the Program:**
