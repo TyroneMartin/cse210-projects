@@ -4,6 +4,9 @@ using System.Collections.Generic;
 public class Calculator
 {
     private List<double> _history;
+    // private double _a;
+    // private double _b;    // to implement and add getter and setters for a and b
+
     private OperationManager _operationManager;
 
     public Calculator(OperationManager operationManager)
@@ -40,12 +43,12 @@ public class Calculator
         return result;
     }
 
-    // public double Modulo(double a, double b)
-    // {
-    //     double result = _operationManager.ModuloOperation.Calculate(a, b);
-    //     _history.Add(result);
-    //     return result;
-    // }
+    public double Modulo(double a, double b)
+    {
+        double result = _operationManager.ModuloOperation.Calculate(a, b);
+        _history.Add(result);
+        return result;
+    }
 
 
 

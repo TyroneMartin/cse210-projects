@@ -7,17 +7,15 @@ public class OperationManager
     private SubtractOperation _subtractOperation;
     private MultiplyOperation _multiplyOperation;
     private DivideOperation _divideOperation;
-    // private ModuloOperation _moduloOperation;   // needs to be fixed 
+    private ModuloOperation _moduloOperation;
 
     public OperationManager()
     {
-        // var moduloValidator = new ModuloValidator();
-        
         _addOperation = new AddOperation();
         _subtractOperation = new SubtractOperation();
         _multiplyOperation = new MultiplyOperation();
         _divideOperation = new DivideOperation();
-        // _moduloOperation = new ModuloOperation(moduloValidator);
+        _moduloOperation = new ModuloOperation();
     }
 
     public AddOperation AddOperation
@@ -36,8 +34,8 @@ public class OperationManager
     {
         get { return _divideOperation; }
     }
-    // public ModuloOperation ModuloOperation 
-    // {
-    //     get { return _moduloOperation; }
-    // }
+    public ModuloOperation ModuloOperation 
+    {
+        get { return _moduloOperation; }
+    }
 }
