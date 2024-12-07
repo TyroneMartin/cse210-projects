@@ -21,7 +21,8 @@ class Program
         // Console.WriteLine(" 3. Multiplication");
         // Console.WriteLine(" 4. Division");
         // Console.WriteLine(" 5. Modulo");
-
+        // Console.WriteLine(" 7. View History");
+        // Console.WriteLine(" 6. Clear History");
         // Console.WriteLine(" 4. Quit");
         // Console.Write("\nSelect a choice from the menu: ");
         // string choice = Console.ReadLine();
