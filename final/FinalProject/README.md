@@ -1,16 +1,16 @@
-# cse210-student-template
-<!-- Tyrone Martin for students in CSE 210.
+# Basic Calculator Application
 
-This repository contains the starter code for many different projects. They are arranged as follows:
+**Author:** Tyrone Martin, students in CSE 210.
 
-* `sandbox` - An empty project that you can use to play around with any concepts you like.
-* `csharp-prep` - Starter projects for each of the C# Prep assignments.
-* `prepare` - Starter projects for each of the preparation Learning Activities.
-* `prove` - Starter projects for each of the prove Developer projects.
-* `final` - Starter projects for final project. -->
+## Overview
 
 
-# Installation
+This project is an Basic Calculator application that demonstrates the use of object-oriented programming principles in C#, including main principles such as inheritance, polymorphism, that are outlined in the UML diagram below:
+
+![ULM Diagram](../FinalProject/basic_calculator_uml_design.png)
+
+
+## Installation
 
 ### Compiling on Your Local Machine
 Follow these steps to compile the project using the .NET SDK:
@@ -39,4 +39,32 @@ Follow these steps to compile the project using the .NET SDK:
    ```bash
    dotnet run
    ```
+
+
+## Features
+
+
+## System Requirements
+
+
+## How to Use
+
+## Project Structure
+
+
+## Future Improvements
+(if needed)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
