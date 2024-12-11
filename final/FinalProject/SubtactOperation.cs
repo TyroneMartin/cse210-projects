@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 public class SubtractOperation : Operation
 {
-    public SubtractOperation() : base("Subtraction") { }
+    public SubtractOperation() : base("Subtraction", "-") { }
 
-    public override double Calculate(double a, double b) 
+    public override double Calculate(double minuend, double subtrahend) 
     {
-        return a - b;
+        return minuend - subtrahend;
     }
 }

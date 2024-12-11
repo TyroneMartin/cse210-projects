@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 public class AddOperation : Operation
 {
-    public AddOperation() : base("Addition") { }
+    public AddOperation() : base("Addition", "+") { }
 
-    public override double Calculate(double a, double b) 
+    public override double Calculate(double value1, double value2) 
     {
-        return a + b;
+        return value1 + value2;
     }
 }

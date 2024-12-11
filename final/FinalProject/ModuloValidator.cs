@@ -8,6 +8,8 @@ public class ModuloValidator
     {
         if (divisor == 0)
             throw new DivideByZeroException("Cannot calculate modulo by zero");
+
+            // need to add more logic
     }
 }
 

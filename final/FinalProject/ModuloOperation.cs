@@ -1,20 +1,18 @@
 using System;
 using System.Collections.Generic;
 
-public class ModuloOperation
+public class ModuloOperation : Operation
 {
     private ModuloValidator _validator;
 
-    public ModuloOperation()
+    public ModuloOperation(ModuloValidator validator) : base("Modulo", "%")
     {
-        _validator = new ModuloValidator();
+        _validator = validator;
     }
 
-    public double Calculate(double a, double b)
+    public override double Calculate(double dividend, double divisor)
     {
-        _validator.Validator(b);
-        return a % b;
+        _validator.Validator(divisor);
+        return dividend % divisor;
     }
-
-   
 }

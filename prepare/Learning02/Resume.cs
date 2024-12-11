@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 // Class: Resume
 // Attributes:  
-// * _name : string
+// * _operationName : string
 // * _jobs : List<Job>
 
 // * Behaviors/Methods:
@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 public class Resume
 {
-    public string _name;
+    public string _operationName;
     public List<Job> _jobs = new List<Job>();
 
     public void DisplayResume()

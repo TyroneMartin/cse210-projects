@@ -3,25 +3,25 @@ using System.Dynamic;
 
 public abstract class Goal
 {
-    public string _name;
+    public string _operationName;
     public int _points;
     public string _description;
 
     public Goal(string name, string description, int points)
     {
-        _name = name;
+        _operationName = name;
         _description = description;
         _points = points;
     }
 
     // public string GetName()
     // {
-    //     return _name;
+    //     return _operationName;
     // }
 
     //   public string  SetName()
     // {
-    //     return _name;
+    //     return _operationName;
     // }
 
     public abstract int RecordEvent();
@@ -41,7 +41,7 @@ public abstract class Goal
         return new Dictionary<string, object>
         {
             { "type", GetType().Name },
-            { "name", _name },
+            { "name", _operationName },
             { "description", _description },
             { "points", _points }
         };
