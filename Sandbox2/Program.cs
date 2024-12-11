@@ -44,16 +44,16 @@ class Program
     // New Person2 class to set a name through a constructor
     public class Person2
     {
-        private string _name;
+        private string _operationName;
 
         public Person2(string name)
         {
-            _name = name;
+            _operationName = name;
         }
 
         public string GetName()
         {
-            return _name;
+            return _operationName;
         }
     }
 
@@ -80,7 +80,7 @@ class Program
 
             return $"Name: {GetName()}, Number: {_number}";
             // I can also set the variable user that stores GetName() to protected 
-            //allowing it to be used in the class variable directly _name2
+            //allowing it to be used in the class variable directly _operationName2
         }
 
 

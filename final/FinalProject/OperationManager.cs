@@ -11,11 +11,12 @@ public class OperationManager
 
     public OperationManager()
     {
+        var moduloValidator = new ModuloValidator();
         _addOperation = new AddOperation();
         _subtractOperation = new SubtractOperation();
         _multiplyOperation = new MultiplyOperation();
         _divideOperation = new DivideOperation();
-        _moduloOperation = new ModuloOperation();
+        _moduloOperation = new ModuloOperation(moduloValidator);
     }
 
     public AddOperation AddOperation
@@ -30,11 +31,11 @@ public class OperationManager
     {
         get { return _multiplyOperation; }
     }
-    public DivideOperation DivideOperation 
+    public DivideOperation DivideOperation
     {
         get { return _divideOperation; }
     }
-    public ModuloOperation ModuloOperation 
+    public ModuloOperation ModuloOperation
     {
         get { return _moduloOperation; }
     }

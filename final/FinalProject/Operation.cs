@@ -1,18 +1,27 @@
 using System;
 using System.Collections.Generic;
+
+
 public abstract class Operation
 {
-    private string _name;
-    public Operation(string name)
+    private string _operationName;
+    private string _operationSign;
+
+    public Operation(string name, string sign)
     {
-        _name = name;
+        _operationName = name;
+        _operationSign = sign;
     }
 
     public string GetName()
     {
-        return _name;
+        return _operationName;
     }
 
-    public abstract double Calculate(double a, double b);
-}
+    public string GetSign()
+    {
+        return _operationSign;
+    }
 
+    public abstract double Calculate(double operand1, double operand2);
+}

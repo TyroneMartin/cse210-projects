@@ -4,13 +4,13 @@ using System.Threading;
 
 public abstract class Activity
 {
-    private string _name;
+    private string _operationName;
     private string _description;
     private int _duration;
 
     public Activity(string name, string description)
     {
-        _name = name;
+        _operationName = name;
         _description = description;
     }
 
