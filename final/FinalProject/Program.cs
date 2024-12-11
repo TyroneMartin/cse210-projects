@@ -78,7 +78,9 @@ class Program
                     if (operation != null)
                     {
                         Console.Clear();
-                        calculationResult = calculator.PerformOperation(operation, calculator.OperandA, calculator.OperandB);
+                        // calculationResult = calculator.PerformOperation(operation, calculator.OperandA, calculator.OperandB);
+                        calculator.OperandB = operation.Calculate(calculator.OperandA, calculator.OperandB);  // Update the second operand
+                        calculationResult = calculator.OperandB;
                         Console.WriteLine($"\nThe {operation.GetName()} result is: [{calculator.OperandA} {operation.GetSign()} {calculator.OperandB}] = {calculationResult}");
                     }
                     break;
