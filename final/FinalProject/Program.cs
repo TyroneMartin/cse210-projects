@@ -1,135 +1,54 @@
-using System;
-
 class Program
 {
     static void Main(string[] args)
     {
         Console.Clear();
-        Console.WriteLine("======================================");
-        Console.WriteLine("Welcome to the Calculator!");
-        Console.WriteLine("======================================");
+        Console.WriteLine("============================================");
+        Console.WriteLine("Welcome to the Basic Calculator Program!");
+        Console.WriteLine("============================================");
+        Console.WriteLine("\nInstructions:");
+        Console.WriteLine("1. Enter a number.");
+        Console.WriteLine("2. Choose an operator.");
+        Console.WriteLine("3. Enter another number.");
+        Console.WriteLine("4. Continue calculations or return to the main menu.");
+        Console.WriteLine("\nPress any key to continue...");
+        Console.ReadKey();
 
-        OperationManager operationManager = new OperationManager();
-        Calculator calculator = new Calculator();
+        var calculator = new Calculator(0);
+        var helper = new CalculatorHelper(calculator);
+        bool running = true;
 
-        bool isRunning = true;
-
-        while (isRunning)
+        while (running)
         {
+            Console.Clear();
             Console.WriteLine("\nMain Menu Options:");
-            Console.WriteLine(" 1. Addition");
-            Console.WriteLine(" 2. Subtraction");
-            Console.WriteLine(" 3. Multiplication");
-            Console.WriteLine(" 4. Division");
-            Console.WriteLine(" 5. Modulo");
-            Console.WriteLine(" 6. View Session History");
-            Console.WriteLine(" 7. Clear Session History");
-            Console.WriteLine(" 8. Quit");
+            Console.WriteLine("1. Start New Calculation");
+            Console.WriteLine("2. View Calculation History");
+            Console.WriteLine("3. Clear History");
+            Console.WriteLine("4. Quit");
             Console.Write("\nSelect an option: ");
-            string userChoice = Console.ReadLine();
+            string choice = Console.ReadLine();
 
-            double calculationResult = 0;
-            switch (userChoice)
+            switch (choice)
             {
                 case "1":
+                    helper.PerformCalculations();
+                    break;
                 case "2":
+                    helper.DisplayHistory();
+                    break;
                 case "3":
+                    calculator.Reset();
+                    Console.WriteLine("History cleared! Press any key to return to the menu.");
+                    Console.ReadKey();
+                    break;
                 case "4":
-                case "5":
-                    Console.Write("~~ Note: Match format: 1st number eg. 2; then 2nd number eg. 3 ~~\n");
-                    Console.Write("\n-> Enter the first number: ");
-                    calculator.OperandA = Convert.ToDouble(Console.ReadLine());
-                    Console.Write("-> Enter the second number: ");
-                    calculator.OperandB = Convert.ToDouble(Console.ReadLine());
-
-                    // switch (userChoice)
-                    // {
-                    //     case "1":
-                    //         operation = operationManager.AddOperation;
-                    //         break;
-                    //     case "2":
-                    //         operation = operationManager.SubtractOperation;
-                    //         break;
-                    //     case "3":
-                    //         operation = operationManager.MultiplyOperation;
-                    //         break;
-                    //     case "4":
-                    //         operation = operationManager.DivideOperation;
-                    //         break;
-                    //     case "5":
-                    //         operation = operationManager.ModuloOperation;
-                    //         break;
-                    //     default:
-                    //         operation = null;
-                    //         break;
-                    // }
-
-
-                    Operation operation = userChoice switch
-                    {
-                        "1" => operationManager.AddOperation,
-                        "2" => operationManager.SubtractOperation,
-                        "3" => operationManager.MultiplyOperation,
-                        "4" => operationManager.DivideOperation,
-                        "5" => operationManager.ModuloOperation,
-                        _ => null
-                    };
-
-                    if (operation != null)
-                    {
-                        Console.Clear();
-                        // calculationResult = calculator.PerformOperation(operation, calculator.OperandA, calculator.OperandB);
-                        calculator.OperandB = operation.Calculate(calculator.OperandA, calculator.OperandB);  // Update the second operand
-                        calculationResult = calculator.OperandB;
-                        Console.WriteLine($"\nThe {operation.GetName()} result is: [{calculator.OperandA} {operation.GetSign()} {calculator.OperandB}] = {calculationResult}");
-                    }
-                    break;
-
-                case "6":
+                    running = false;
                     Console.Clear();
-                    if (calculator.GetCalculationHistory().Count == 0)
-                    {
-                        Console.WriteLine("No calculation history to clear.\n");
-                        Console.WriteLine("Please make a calculation first.");
-                        Console.WriteLine("\nPress any key to continue...");
-                        Console.ReadKey();
-                        Console.Clear();
-                        break;
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("~~Calculation History~~\n");
-                        foreach (var record in calculator.GetCalculationHistory())
-                        {
-                            Console.WriteLine($"Operation: {record.GetName()}, Result: {record.Result}");
-                        }
-                        Console.WriteLine("\nPress any key to continue...");
-                        Console.ReadKey();
-                        Console.Clear();
-                        break;
-                    }
-
-                case "7":
-                    Console.Clear();
-                    calculator.ClearHistory();
-                    Console.WriteLine("Calculation history cleared!");
-                    Console.WriteLine("\nPress any key to continue...");
-                    Console.ReadKey();
+                    Console.WriteLine("Thanks for using the calculator! Goodbye!");
                     break;
-
-                case "8":
-                    isRunning = false;
-                    Console.Clear();
-                    Console.WriteLine("~~ Thanks for using the Calculator! ~~");
-                    Console.WriteLine("\nProgram was exited. Goodbye!\n");
-                    break;
-
                 default:
-                    Console.WriteLine("Invalid choice. Please try again. Select a number between 1 and 8.");
-                    Console.WriteLine("\nPress any key to continue...");
-                    Console.ReadKey();
-                    Console.Clear();
+                    Console.WriteLine("Invalid choice. Please try again.");
                     break;
             }
         }
