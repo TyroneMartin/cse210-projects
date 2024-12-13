@@ -3,41 +3,55 @@ using System.Collections.Generic;
 
 public class Calculator
 {
-    private List<CalculationRecord> _calculationHistory;
-    private double _operandA;
-    private double _operandB;
+    private readonly List<CalculationRecord> _history = new();
 
-    public Calculator()
+    private double _currentResult;
+
+
+    public Calculator( double currentResult)
     {
-        _calculationHistory = new List<CalculationRecord>();
+        _currentResult = currentResult;
     }
 
-    public double OperandA
+       public double CurrentResult
     {
-        get { return _operandA; }
-        set { _operandA = value; }
+        get { return _currentResult; }
     }
 
-    public double OperandB
+
+    public void Reset()
     {
-        get { return _operandB; }
-        set { _operandB = value; }
+        _history.Clear();
+        _currentResult = 0;
     }
 
-    public double PerformOperation(Operation operation, double operandA, double operandB)
+    public double PerformOperation(Operation operation, double operand)
     {
-        double result = operation.Calculate(operandA, operandB);
-        _calculationHistory.Add(new CalculationRecord(operation.GetName(), operation.GetSign(), result));
-        return result;
+        _currentResult = operation.Calculate(_currentResult, operand);
+        _history.Add(new CalculationRecord(operation.GetName(), operation.GetSign(), _currentResult));
+        return _currentResult;
     }
 
-    public void ClearHistory()
+    public List<CalculationRecord> GetHistory()
     {
-        _calculationHistory.Clear();
+        return new List<CalculationRecord>(_history);
     }
 
-    public List<CalculationRecord> GetCalculationHistory()
+    public double GetUserInput(string prompt)
     {
-        return new List<CalculationRecord>(_calculationHistory);
+        Console.Write(prompt);
+        double input;
+        while (!double.TryParse(Console.ReadLine(), out input))
+        {
+            Console.WriteLine("Invalid input. Please enter a valid number.");
+            Console.Write(prompt);
+        }
+        return input;
     }
+
+    public void SetCurrentResult(double value)
+    {
+        _currentResult = value;
+    }
+
 }

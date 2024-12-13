@@ -9,21 +9,15 @@ public class DivideOperation : Operation
     {
         while (denominator == 0)
         {
-            Console.WriteLine("Cannot divide by zero.");
-            Console.Write("-> Enter a non-zero number: ");
-            // if (double.TryParse(Console.ReadLine(), out b))
-            if (double.TryParse(Console.ReadLine(), out double newDenominator) && newDenominator != 0)
+            Console.WriteLine("\nError in divide operation");
+            Console.WriteLine("-> Cannot divide by zero.");
+            Console.Write("\nEnter a non-zero divisor: ");
+            if (double.TryParse(Console.ReadLine(), out denominator) && denominator != 0)
             {
-                // if (denominator != 0)
-                //     break;
-                denominator = newDenominator;
+                break;
             }
-            else
-            {
-                Console.WriteLine("Invalid input. Please enter a valid number.");
-            }
+            Console.WriteLine("Invalid input. Try again.");
         }
         return numerator / denominator;
     }
-
 }
