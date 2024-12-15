@@ -36,7 +36,7 @@ public class CalculatorHelper
 
             if (!_operations.ContainsKey(operatorInput))
             {
-                Console.WriteLine("Invalid operator. Please try again.");
+                Console.WriteLine("->    Invalid operator. Please try again.");
                 continue;
             }
 
