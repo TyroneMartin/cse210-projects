@@ -17,11 +17,10 @@ This project is a simple calculator application that performs basic arithmetic o
 The project is structured as follows:
 
 - `Program.cs`: The main entry point of the application.
-- `Operation`: Contains the `abstract base class Operation`, which performs the arithmetic operations.
-- `CalculatorHelper.cs`: Contains the `CalculatorHelper` class, which performs the actual arithmetic operations.
-- `Calculator.cs`: Contains the `Calculator` class, which performs the actual arithmetic operations.
-- `CalculationRecord.cs`: Contains the `CalculationRecord` class, which stores the calculation history.
-- `ModuloValidator.cs`: Contains the `ModuloValidator` class, which validates the input for the modulo operation.
+- `Operation`: Contains the `abstract base class Operation`, which defines the common behavior of all main operations.
+- `CalculatorHelper.cs`: Contains the `CalculatorHelper` class, which helps perform the main function by keeping track of the user's input and history, and determine the operation that will be executed based on the user's input.
+- `Calculator.cs`: Contains the `Calculator` class, which tracks and carries out the main function of the calculator.
+- `CalculationRecord.cs`: Contains the `CalculationRecord` class, which holds the details of a single calculation performed by the calculator.
 - `AdditionOperation.cs`: Contains the `AdditionOperation` subclass, which performs the addition operation.
 - `SubtractionOperation.cs`: Contains the `SubtractionOperation` subclass, which performs the subtraction operation.
 - `MultiplicationOperation.cs`: Contains the `MultiplicationOperation` subclass, which performs the multiplication operation.
@@ -37,7 +36,7 @@ The project is structured as follows:
 5. Open terminal and navigate to the project folder `CTRL +  ~ ` for Windows.
 6. Import or clone the repository into Visual Studio Code.
 7. Open the `Program.cs` file for the final project program.
-8. Run the program by pressing F5 or selecting "Debug" from the menu.
+8. Run the program by selecting "Debug" from the menu.  
 9. The calculator will display a welcome message. Select an option from the menu.
 10. Enter the first number, select an operation, and enter the second number.
 11. The calculator will display the result.
@@ -102,9 +101,11 @@ Follow these steps to compile the project using the .NET SDK:
 - **.NET SDK:** [Download .NET SDK](https://dotnet.microsoft.com/download)
 
 ## Future Improvements
-- Add more unit tests
-- Add more error handling
-- Add more validation
+- Add unit tests
+- Add more operations
 - Add more features
+   - Such as a better UI
+   - History of previous calculations
 - Add more documentation
 - Add more comments
+
