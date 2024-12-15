@@ -15,7 +15,8 @@ public class CalculatorHelper
             { "/", new DivideOperation() },
             { "+", new AddOperation() },
             { "-", new SubtractOperation() },
-            { "%", new ModuloOperation() }
+            { "%", new ModuloOperation() },
+            { "^", new ExponentiationOperation() }
         };
     }
 
@@ -29,8 +30,8 @@ public class CalculatorHelper
         bool continueCalculating = true;
         while (continueCalculating)
         {
-            Console.WriteLine($"->    Current result:  [ {_calculator.CurrentResult} ] ");
-            Console.Write("Choose an operator: Ex. (*, /, +, -, %): ");
+            Console.WriteLine($"\n->    Current result:  [ {_calculator.CurrentResult} ] ");
+            Console.Write("->    Choose an operator: Ex. (*, /, +, -, %, ^): ");
             string operatorInput = Console.ReadLine();
 
             if (!_operations.ContainsKey(operatorInput))
@@ -39,7 +40,7 @@ public class CalculatorHelper
                 continue;
             }
 
-            double nextNumber = _calculator.GetUserInput("Enter the next number: ");
+            double nextNumber = _calculator.GetUserInput("->    Enter the next number: ");
             _calculator.PerformOperation(_operations[operatorInput], nextNumber);
             Console.WriteLine($"\n->    Updated result:   [ {_calculator.CurrentResult} ]");
 
@@ -80,7 +81,7 @@ public class CalculatorHelper
             }
         }
     }
-    
+
     public void DisplayHistory()
     {
         Console.Clear();

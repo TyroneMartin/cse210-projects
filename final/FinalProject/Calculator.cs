@@ -42,7 +42,7 @@ public class Calculator
         double input;
         while (!double.TryParse(Console.ReadLine(), out input))
         {
-            Console.WriteLine("Invalid input. Please enter a valid number.");
+            Console.WriteLine("\n->    Invalid input. Please enter a valid number.");
             Console.Write(prompt);
         }
         return input;
