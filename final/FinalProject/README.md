@@ -36,7 +36,7 @@ The project is structured as follows:
 5. Open terminal and navigate to the project folder `CTRL +  ~ ` for Windows.
 6. Import or clone the repository into Visual Studio Code.
 7. Open the `Program.cs` file for the final project program.
-8. Run the program by selecting "Debug" from the menu.  
+8. Run the program by selecting "Debug" from the menu.
 9. The calculator will display a welcome message. Select an option from the menu.
 10. Enter the first number, select an operation, and enter the second number.
 11. The calculator will display the result.
@@ -101,11 +101,11 @@ Follow these steps to compile the project using the .NET SDK:
 - **.NET SDK:** [Download .NET SDK](https://dotnet.microsoft.com/download)
 
 ## Future Improvements
+
 - Add unit tests
 - Add more operations
 - Add more features
-   - Such as a better UI
-   - History of previous calculations
+  - Such as a better UI
+  - History of previous calculations
 - Add more documentation
 - Add more comments
-

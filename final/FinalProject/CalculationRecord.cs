@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 public class CalculationRecord
 {
@@ -18,7 +17,7 @@ public class CalculationRecord
     {
         get { return _operationName; }
     }
-    public string OperationSign 
+    public string OperationSign
     {
         get { return _operationSign; }
     }

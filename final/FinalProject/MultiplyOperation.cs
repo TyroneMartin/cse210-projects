@@ -1,7 +1,5 @@
 
 using System;
-using System.Collections.Generic;
-
 public class MultiplyOperation : Operation
 {
     public MultiplyOperation() : base("Multiplication", "*") { }
