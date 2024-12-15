@@ -7,13 +7,12 @@ public class Calculator
 
     private double _currentResult;
 
-
-    public Calculator( double currentResult)
+    public Calculator(double currentResult)
     {
         _currentResult = currentResult;
     }
 
-       public double CurrentResult
+    public double CurrentResult
     {
         get { return _currentResult; }
     }
