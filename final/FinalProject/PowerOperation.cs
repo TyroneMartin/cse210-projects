@@ -1,7 +1,7 @@
 using System;
-public class ExponentiationOperation : Operation
+public class PowerOperation : Operation
 {
-    public ExponentiationOperation() : base("Exponentiation", "^") { }
+    public PowerOperation() : base("Exponentiation", "^") { }
 
     public override double Calculate(double baseValue, double exponent)
     {

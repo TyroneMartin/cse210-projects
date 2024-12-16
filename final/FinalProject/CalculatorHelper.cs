@@ -16,7 +16,7 @@ public class CalculatorHelper
             { "+", new AddOperation() },
             { "-", new SubtractOperation() },
             { "%", new ModuloOperation() },
-            { "^", new ExponentiationOperation() }
+            { "^", new PowerOperation() }
         };
     }
 
